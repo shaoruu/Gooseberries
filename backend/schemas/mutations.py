@@ -17,7 +17,13 @@ class Register(graphene.Mutation):
 
     def mutate(self, info, input):
         data_dict = input_to_dictionary(input)
+        if User.objects.filter(username=data_dict['username']):
+            raise GraphQLError('Username already taken.')
+        if User.objects.filter(email=data_dict['email']):
+            raise GraphQLError('Email already taken.')
+        password = data_dict.pop('password')
         new_user = User(**data_dict)
+        new_user.set_password(password)
         new_user.save()
         return Register(user=new_user)
         
