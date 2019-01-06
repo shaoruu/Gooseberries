@@ -4,25 +4,28 @@ from backend.models import User, Post, Thread
 from backend.schemas.queries import UserType, PostType, ThreadType
 from backend.schemas.attributes import UserAttribute, PostAttribute, ThreadAttribute
 from backend.utils import input_to_dictionary
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
-class RegisterInput(graphene.InputObjectType, UserAttribute):
-    """Arguments to create a user."""
-    pass
 
 class Register(graphene.Mutation):
     user = graphene.Field(lambda: UserType, description="Registered User")
 
     class Arguments:
-        input = RegisterInput(required=True)
+        username = graphene.String(description="User's username", required=True)
+        email = graphene.String(description="User's email", required=True)
+        password = graphene.String(description="User's Password", required=True)
 
-    def mutate(self, info, input):
-        data_dict = input_to_dictionary(input)
-        if User.objects.filter(username=data_dict['username']):
-            raise GraphQLError('Username already taken.')
-        if User.objects.filter(email=data_dict['email']):
-            raise GraphQLError('Email already taken.')
-        password = data_dict.pop('password')
-        new_user = User(**data_dict)
+    def mutate(self, info, username, email, password):
+        try:
+            validate_email(email)
+        except ValidationError:
+            raise GraphQLError('Invalid Email Format.')
+        if User.objects.filter(username=username):
+            raise GraphQLError('Username Already Taken.')
+        if User.objects.filter(email=email):
+            raise GraphQLError('Email Already Taken')
+        new_user = User(username=username, email=email)
         new_user.set_password(password)
         new_user.save()
         return Register(user=new_user)

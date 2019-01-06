@@ -2,7 +2,6 @@ import graphene
 
 class UserAttribute:
     first_name = graphene.String(description="User's first name", required=True)
-    middle_name = graphene.String(description="User's last name", default_value=None)
     last_name = graphene.String(description="User's last name", required=True)
     username = graphene.String(description="User's username", required=True)
     email = graphene.String(description="User's email", required=True)

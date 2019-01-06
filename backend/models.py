@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils import timezone
-from backend.base_models.BaseUser import BaseUser
+# from backend.base_models.BaseUser import BaseUser
+from django.contrib.auth.models import AbstractUser
 
 
-class User(BaseUser):
-    id = models.AutoField(primary_key=True, max_length=20)
+class User(AbstractUser):
     bio = models.CharField(max_length=50, blank=True, default="")
     job_title = models.CharField(max_length=50, blank=True, default="")
     github_account = models.URLField(max_length=255, blank=True, null=True)
@@ -15,7 +15,7 @@ class User(BaseUser):
     threads = models.ManyToManyField('Thread', blank=True)
 
     def __str__(self):
-        return f"'{self.get_full_name()}' '{self.email}'"
+        return self.get_full_name()
 
     def add_github(self, link):
         self.github_account = link 
