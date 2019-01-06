@@ -2,8 +2,9 @@ import graphene
 import graphql_jwt
 
 import backend.schema
+import backend.schemas.queries_relay
 
-class Query(backend.schema.Query, graphene.ObjectType):
+class Query(backend.schema.Query, backend.schemas.queries_relay.RelayQuery, graphene.ObjectType):
     pass
 
 class Mutation(backend.schema.Mutation, graphene.ObjectType):
