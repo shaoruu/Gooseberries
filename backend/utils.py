@@ -1,0 +1,12 @@
+from graphql_relay.node.node import from_global_id
+
+# source: https://github.com/alexisrolland/flask-graphene-sqlalchemy/blob/master/example/utils.py
+def input_to_dictionary(input):
+    """Method to convert Graphene inputs into dictionary."""
+    dictionary = {}
+    for key in input:
+        # Convert GraphQL global id to database id
+        if key[-2:] == 'id' and input[key] != 'unknown':
+            input[key] = from_global_id(input[key])[1]
+        dictionary[key] = input[key]
+    return dictionary
