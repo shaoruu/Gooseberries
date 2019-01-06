@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-# from backend.base_models.BaseUser import BaseUser
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
 
@@ -28,7 +28,20 @@ class User(AbstractUser):
 
     def add_twitter(self, link):
         self.twitter_account = link
-    
+
+    def get_full_name(self):
+        """
+        Returns the full name of the user by concatinating the first and last name with a space.
+        """
+        full_name = f'{self.first_name} {self.last_name}'
+        return full_name
+
+    def get_short_name(self):
+        """
+        Returns the shorten version of the user's name.
+        """
+        return self.first_name
+
     class Meta:
         db_table = 'user'
 
@@ -40,8 +53,8 @@ class Post(models.Model):
     is_posted = models.BooleanField(default=False)
     date_posted = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(auto_now=True) 
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    thread = models.ForeignKey('Thread', on_delete=models.CASCADE)
+    posted_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    thread = models.ForeignKey('Thread', null=True, on_delete=models.CASCADE)
 
     def post(self):
         self.is_posted = True
@@ -52,6 +65,11 @@ class Post(models.Model):
     class Meta:
         db_table = 'post'
         ordering = ['date_posted', 'date_updated']
+
+class Like(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+
 
 class Thread(models.Model):
     id = models.BigAutoField(primary_key=True)
