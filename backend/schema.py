@@ -3,7 +3,7 @@ from .models import User, Post, Thread, Like
 from backend.schemas.queries import (
     UserType, PostType, ThreadType, LikeType,
     UserFilter, UserNode, PostFilter, PostNode, ThreadFilter, ThreadNode)
-from backend.schemas.mutations import Register, CreatePost, LikePost
+from backend.schemas.mutations import Register, CreatePost, LikePost, LogIn, LogOut
 from graphene_django.filter import DjangoFilterConnectionField
 
 
@@ -31,3 +31,5 @@ class Mutation(graphene.ObjectType):
     register = Register.Field() 
     create_post = CreatePost.Field()
     like_post = LikePost.Field()
+    login = LogIn.Field()
+    logout = LogOut.Field()
