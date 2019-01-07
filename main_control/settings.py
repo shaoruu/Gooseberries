@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    'backend',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -133,4 +133,4 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-AUTH_USER_MODEL = 'backend.User'
+AUTH_USER_MODEL = 'users.User'
