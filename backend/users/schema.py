@@ -1,7 +1,7 @@
 import graphene
 from graphql import GraphQLError
-from users.schemas.queries import UserType, UserFilter, UserNode
-from users.schemas.mutations import (
+from backend.users.schemas.queries import UserType, UserFilter, UserNode
+from backend.users.schemas.mutations import (
     Register, Login, UpdateProfile, Logout, DeleteAccount
 )
 from graphene_django.filter import DjangoFilterConnectionField

@@ -2,7 +2,7 @@ import graphene
 import django_filters
 from graphene_django import DjangoObjectType
 from graphql_jwt.utils import jwt_encode, jwt_payload
-from users.models import User
+from backend.users.models import User
 
 
 class UserType(DjangoObjectType):

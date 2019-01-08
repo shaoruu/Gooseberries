@@ -2,8 +2,8 @@ import string
 import graphene
 from graphql import GraphQLError
 from django.contrib.auth import authenticate, login, logout
-from users.schemas.queries import UserNode
-from users.models import User as UserModel
+from backend.users.schemas.queries import UserNode
+from backend.users.models import User as UserModel
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.validators import ASCIIUsernameValidator
