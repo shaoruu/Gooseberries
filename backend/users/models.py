@@ -14,8 +14,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, max_length=255)
     date_of_birth = models.DateField()
     # profile_image = models.ImageField(default="default.jpg")
-    bio = models.TextField(max_length=255)
-    is_admin = models.BooleanField(default=False)
+    bio = models.TextField(max_length=500)
 
     date_joined = models.DateTimeField(editable=False)
     last_login = models.DateTimeField()
@@ -31,15 +30,25 @@ class User(AbstractUser):
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
 
-    def save(self, *args, **kwargs):
+    def enable(self):
+        self.is_active = True
+
+    def disable(self):
+        self.is_active = False
+
+    def save(self, called_by_admin=False, *args, **kwargs):
         ''' On save, update timestamps '''
         if not self.id:
+            ''' Initialization of the timestamps '''
             self.date_joined = timezone.now()
-        self.last_login = timezone.now()
+            self.last_login = timezone.now()
+        if not called_by_admin: 
+            ''' User has modified his/her own profile '''
+            self.last_login = timezone.now()
         return super(User, self).save(*args, **kwargs)
 
     @property
-    def is_admin(self):
-        "Is the user an admin of the site?"
-        return is_admin
+    def is_superuser(self):
+        "Is the user a staff of the site?"
+        return is_staff
     

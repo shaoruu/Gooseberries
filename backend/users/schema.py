@@ -2,7 +2,7 @@ import graphene
 from graphql import GraphQLError
 from backend.users.schemas.queries import UserType, UserFilter, UserNode
 from backend.users.schemas.mutations import (
-    Register, Login, UpdateProfile, Logout, DeleteAccount
+    Register, Login, UpdateProfile, Logout, DeleteAccount, EnableAccount, DisableAccount
 )
 from graphene_django.filter import DjangoFilterConnectionField
 
@@ -25,3 +25,5 @@ class Mutation(graphene.ObjectType):
     update_profile = UpdateProfile.Field()
     logout = Logout.Field()
     delete_account = DeleteAccount.Field()
+    enable_account = EnableAccount.Field()
+    disable_account = DisableAccount.Field()

@@ -1,4 +1,3 @@
-import string
 import graphene
 from graphql import GraphQLError
 from django.contrib.auth import authenticate, login, logout
@@ -7,6 +6,7 @@ from backend.users.models import User as UserModel
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.validators import ASCIIUsernameValidator
+from backend.utils import remove_none, validate_name
 
 
 class Register(graphene.relay.ClientIDMutation):
@@ -21,11 +21,15 @@ class Register(graphene.relay.ClientIDMutation):
         date_of_birth = graphene.types.datetime.Date(required=True, description="User's date of birth")
         first_name    = graphene.String(description="User's first name", default_value="")
         last_name     = graphene.String(description="User's last name", default_value="")
+        is_staff      = graphene.Boolean(description="Whether the user is an admin or not", default_value=False)
 
     ' Fields '
     user = graphene.Field(UserNode)
 
     def mutate_and_get_payload(root, info, **input):
+        "Login check"
+        if not info.context.user.is_anonymous:
+            raise GraphQLError('Already logged in.')
         "Extra username validation"
         if ' ' in input.get('username'):
             raise GraphQLError('Invalid username format.')
@@ -39,8 +43,10 @@ class Register(graphene.relay.ClientIDMutation):
             raise GraphQLError('Username already taken.')
         if UserModel.objects.filter(email=input.get('email')).first():
             raise GraphQLError('Email already taken.')
+        "Checks name format"
         if not validate_name(input.get('first_name')) or not validate_name(input.get('last_name')):
             raise GraphQLError('Invalid first/last name.')
+
         password = input.pop('password')
         new_user = UserModel(**input)
         new_user.set_password(password)
@@ -60,15 +66,15 @@ class Login(graphene.relay.ClientIDMutation):
     user = graphene.Field(UserNode)
 
     def mutate_and_get_payload(root, info, **input):
+        # Logged in user
+        if not info.context.user.is_anonymous:
+            raise GraphQLError('Log out first to login to accounts.')
+
         user = authenticate(**input)
 
-        # Wrong Credentials
+        # Disabled user or wrong credentials
         if user is None:
-            raise GraphQLError('Please enter a correct username and password')
-
-        # Disabled User
-        if not user.is_active:
-            raise GraphQLError('It seems like your account has been disabled.')
+            raise GraphQLError('Unable to authenticate user. Either the account is disabled or the entered credentials are wrong.')
 
         login(info.context, user)
         return Login(user=user)
@@ -114,7 +120,7 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
         if not validate_name(input.get('first_name')) or not validate_name(input.get('last_name')):
             raise GraphQLError('Invalid first/last name.')
         
-        filtered_input = {k:v for k,v in input.items() if v}
+        filtered_input = remove_none(input) 
 
         updated_user = UserModel.objects.filter(id=user.id).first()
         for (key, value) in filtered_input.items():
@@ -149,11 +155,67 @@ class DeleteAccount(graphene.Mutation):
         return DeleteAccount(user=deleted_user)
 
 
-def validate_name(str):
-    "Name Validation"
-    if not str:
-        return True
-    invalid_chars = string.punctuation.replace("\'", "") + "1234567890"
-    if (any(char in invalid_chars for char in str)):
-        return False
-    return True
+class EnableAccount(graphene.relay.ClientIDMutation):
+    """
+    Enables the account with the given username
+    """
+    class Input:
+        username = graphene.String(required=True, description="User's username")
+    
+    ' Fields '
+    user = graphene.Field(UserNode)
+
+    def mutate_and_get_payload(root, info, **input):
+        called_user = info.context.user
+        if called_user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        # Admin rights
+        if not called_user.is_staff:
+            raise GraphQLError('Not an admin.')
+
+        enabled_user = UserModel.objects.filter(username=input.get('username')).first()
+        if not enabled_user:
+            raise GraphQLError('User not found.')
+        
+        # Already enabled
+        if enabled_user.is_active:
+            raise GraphQLError('User already active')
+
+        enabled_user.enable()
+        enabled_user.save(called_by_admin=True)
+        return EnableAccount(user=enabled_user)
+
+
+class DisableAccount(graphene.relay.ClientIDMutation):
+    """
+    Disables account with the provided username
+    """
+    class Input:
+        username = graphene.String(required=True, description="User's username")
+
+    ' Fields '
+    user = graphene.Field(UserNode)
+
+    def mutate_and_get_payload(root, info, **input):
+        called_user = info.context.user
+        if called_user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        # Admin rights
+        if not called_user.is_staff:
+            raise GraphQLError('Not an admin.')
+
+        disabled_user = UserModel.objects.filter(username=input.get('username')).first()
+        if not disabled_user:
+            raise GraphQLError('User not found.')
+        
+        # Already enabled
+        if not disabled_user.is_active:
+            raise GraphQLError('User already disabled')
+
+        disabled_user.disable()
+        disabled_user.save(called_by_admin=True)
+        return DisableAccount(user=disabled_user)
+        
+
+
+
