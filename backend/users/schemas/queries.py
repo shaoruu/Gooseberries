@@ -5,11 +5,6 @@ from graphql_jwt.utils import jwt_encode, jwt_payload
 from backend.users.models import User
 
 
-class UserType(DjangoObjectType):
-    class Meta:
-        model = User
-
-
 class UserFilter(django_filters.FilterSet):
     class Meta:
         model = User

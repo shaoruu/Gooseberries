@@ -1,4 +1,5 @@
 import graphene
+import copy
 from graphql import GraphQLError
 from django.contrib.auth import authenticate, login, logout
 from backend.users.schemas.queries import UserNode
@@ -122,7 +123,7 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
         
         filtered_input = remove_none(input) 
 
-        updated_user = UserModel.objects.filter(id=user.id).first()
+        updated_user = UserModel.objects.get(id=user.id)
         for (key, value) in filtered_input.items():
             setattr(updated_user, key, value)
         updated_user.save()
@@ -133,21 +134,30 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
 class DeleteAccount(graphene.Mutation):
     """
     Logouts the user and deletes the account.
-    No input required; logout handled by Django.
+    Optional inputs, depending on whether its an admin
+    deleting users or users deleting themselves.
     """
+    class Arguments:
+        username = graphene.String(description="Deleted user's username")
 
     ' Fields '
     user = graphene.Field(UserNode)
 
-    def mutate(self, info):
-        user = info.context.user
-        deleted_user = info.context.user
-        
-        if user.is_anonymous:
-            raise GraphQLError('Not authorized.')
+    def mutate(self, info, username):
+        if info.context.user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+
+        if not username:
+            user = info.context.user
+        else:
+            if not info.context.user.is_staff:
+                raise GraphQLError('Not an admin.')
+            user = UserModel.objects.get(username=username)
+        deleted_user = copy.deepcopy(user)
 
         try:
-            logout(info.context)
+            if not username:
+                logout(info.context)
             user.delete()
         except:
             raise GraphQLError('Failed to delete account.')
@@ -173,9 +183,7 @@ class EnableAccount(graphene.relay.ClientIDMutation):
         if not called_user.is_staff:
             raise GraphQLError('Not an admin.')
 
-        enabled_user = UserModel.objects.filter(username=input.get('username')).first()
-        if not enabled_user:
-            raise GraphQLError('User not found.')
+        enabled_user = UserModel.objects.get(username=input.get('username'))
         
         # Already enabled
         if enabled_user.is_active:
@@ -204,9 +212,7 @@ class DisableAccount(graphene.relay.ClientIDMutation):
         if not called_user.is_staff:
             raise GraphQLError('Not an admin.')
 
-        disabled_user = UserModel.objects.filter(username=input.get('username')).first()
-        if not disabled_user:
-            raise GraphQLError('User not found.')
+        disabled_user = UserModel.objects.get(username=input.get('username'))
         
         # Already enabled
         if not disabled_user.is_active:

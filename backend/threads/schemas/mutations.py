@@ -39,8 +39,8 @@ class UpdateThread(graphene.relay.ClientIDMutation):
     Updates a thread with the optional arguments provided.
     """
     class Input:
-        id          = graphene.ID(required=True, description="Thread id")
-        name        = graphene.String(description="Updated thread name")
+        name        = graphene.String(required=True, description="Thread name")
+        new_name    = graphene.String(description="Updated thread name")
         description = graphene.String(description="Updated thread description")
 
     ' Fields '

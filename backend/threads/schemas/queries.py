@@ -14,16 +14,7 @@ class ThreadFilter(django_filters.FilterSet):
         }
 
 
-class CustomThreadNode(graphene.relay.Node):
-    class Meta:
-        name = 'CustomNode'
-
-    @staticmethod
-    def to_global_id(type, id):
-        return id
-
-
 class ThreadNode(DjangoObjectType):
     class Meta:
         model = Thread
-        interfaces = (CustomThreadNode, )
+        interfaces = (graphene.relay.Node, )
