@@ -66,13 +66,19 @@ class UpdateThread(graphene.relay.ClientIDMutation):
 
         # used "pop" instead of "get" to get rid of the old_name argument
         updated_thread = ThreadModel.objects.get(name=filtered_input.pop('name'))
+        if not is_admin(called_user, updated_thread):
+            raise GraphQLError('Not an admin.')
 
         "Checks if user entered a new name and if the entered name is already taken"
         if ThreadModel.objects.filter(name=filtered_input.get('new_name')).first():
             raise GraphQLError('The entered name already taken.')
         
-        if filtered_input.get('name') and ' ' in filtered_input.get('new_name'):
+        if filtered_input.get('new_name') and ' ' in filtered_input.get('new_name'):
             raise GraphQLError('The name of the thread should not contain any spaces.')
+
+        # remove 'new_name' attribute and set to 'name' for spread operator
+        if filtered_input.get('new_name'):
+            filtered_input['name'] = filtered_input.pop('new_name')
 
         for (key, value) in filtered_input.items():
             setattr(updated_thread, key, value)
@@ -201,13 +207,17 @@ class DeleteThread(graphene.Mutation):
     def mutate(self, info, thread_name):
         try: 
             thread = ThreadModel.objects.get(name=thread_name)
-            membership = ThreadMemberModel.objects.filter(
-                user=info.context.user, thread=thread
-            ).get()
-            if membership.is_admin:
+            if is_admin(info.context.user, thread):
                 thread.delete()
             else:
                 raise Exception('Not an admin');
         except Exception as e:
             raise GraphQLError(e)
         return DeleteThread(successful=True)
+
+
+def is_admin(user, thread):
+    membership = ThreadMemberModel.objects.filter(
+        user=user, thread=thread
+    ).get()
+    return membership.is_admin
