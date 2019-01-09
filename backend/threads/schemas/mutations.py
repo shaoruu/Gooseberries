@@ -1,6 +1,6 @@
 import graphene
 from graphql import GraphQLError
-from backend.utils import remove_none
+from backend.utils import clean_input 
 from backend.threads.models import Thread as ThreadModel
 from backend.threads.schemas.queries import ThreadNode
 
@@ -22,14 +22,16 @@ class CreateThread(graphene.relay.ClientIDMutation):
         if called_user is None or called_user.is_anonymous:
             raise GraphQLError('Not logged in.')
 
-        if ' ' in input.get('name'):
+        cleaned_input = clean_input(input)
+
+        if ' ' in cleaned_input.get('name'):
             raise GraphQLError('The name of the thread should not contain any spaces.')
 
         "Checks if entered thread name already exists"
-        if ThreadModel.objects.filter(name=input.get('name')).first():
+        if ThreadModel.objects.filter(name=cleaned_input.get('name')).first():
             raise GraphQLError('Thread name already taken.')
 
-        new_thread = ThreadModel(**input)
+        new_thread = ThreadModel(**cleaned_input)
         new_thread.save()
         return CreateThread(thread=new_thread)
 
@@ -51,21 +53,18 @@ class UpdateThread(graphene.relay.ClientIDMutation):
         if called_user is None or called_user.is_anonymous:
             raise GraphQLError('Not logged in.')
 
-        "Checks if the entered original thread name exists"
-        if not ThreadModel.objects.filter(id=input.get('id')).first():
-            raise GraphQLError('Thread not found.')
-
-        "Checks if user entered a new name and if the entered name is already taken"
-        if ThreadModel.objects.filter(name=input.get('name')).first():
-            raise GraphQLError('The entered name already taken.')
-        
-        filtered_input = remove_none(input)
-
-        if filtered_input.get('name') and ' ' in filtered_input.get('name'):
-            raise GraphQLError('The name of the thread should not contain any spaces.')
+        filtered_input = clean_input(input)
 
         # used "pop" instead of "get" to get rid of the old_name argument
-        updated_thread = ThreadModel.objects.filter(id=filtered_input.pop('id')).first()
+        updated_thread = ThreadModel.objects.get(name=filtered_input.pop('name'))
+
+        "Checks if user entered a new name and if the entered name is already taken"
+        if ThreadModel.objects.filter(name=filtered_input.get('new_name')).first():
+            raise GraphQLError('The entered name already taken.')
+        
+        if filtered_input.get('name') and ' ' in filtered_input.get('new_name'):
+            raise GraphQLError('The name of the thread should not contain any spaces.')
+
         for (key, value) in filtered_input.items():
             setattr(updated_thread, key, value)
         updated_thread.save()

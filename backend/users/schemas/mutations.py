@@ -7,7 +7,7 @@ from backend.users.models import User as UserModel
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.validators import ASCIIUsernameValidator
-from backend.utils import remove_none, validate_name
+from backend.utils import clean_input, validate_name
 
 
 class Register(graphene.relay.ClientIDMutation):
@@ -31,6 +31,9 @@ class Register(graphene.relay.ClientIDMutation):
         "Login check"
         if not info.context.user.is_anonymous:
             raise GraphQLError('Already logged in.')
+        # remove password from input to allow spaces in password
+        password = input.pop('password')
+        input = clean_input(input)
         "Extra username validation"
         if ' ' in input.get('username'):
             raise GraphQLError('Invalid username format.')
@@ -48,7 +51,6 @@ class Register(graphene.relay.ClientIDMutation):
         if not validate_name(input.get('first_name')) or not validate_name(input.get('last_name')):
             raise GraphQLError('Invalid first/last name.')
 
-        password = input.pop('password')
         new_user = UserModel(**input)
         new_user.set_password(password)
         new_user.save()
@@ -71,6 +73,7 @@ class Login(graphene.relay.ClientIDMutation):
         if not info.context.user.is_anonymous:
             raise GraphQLError('Log out first to login to accounts.')
 
+        input['username'] = input.get('username').strip()
         user = authenticate(**input)
 
         # Disabled user or wrong credentials
@@ -114,6 +117,7 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
 
     def mutate_and_get_payload(root, info, **input):
         user = info.context.user
+        input = clean_input(input)
 
         if user.is_anonymous:
             raise GraphQLError('Please login first to modify profile.')
@@ -129,6 +133,25 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
         updated_user.save()
 
         return UpdateProfile(user=updated_user)
+
+
+class SetStaff(graphene.Mutation):
+    """
+    Make the calling user a staff.
+    No input required.
+    """
+    
+    ' Fields '
+    user = graphene.Field(UserNode)
+    
+    def mutate(self, info):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        user.is_staff = True
+        user.save()
+        return SetStaff(user=user)
+        
     
 
 class DeleteAccount(graphene.Mutation):
@@ -147,12 +170,15 @@ class DeleteAccount(graphene.Mutation):
         if info.context.user.is_anonymous:
             raise GraphQLError('Not logged in.')
 
+        username = username.strip()
+
         if not username:
             user = info.context.user
         else:
             if not info.context.user.is_staff:
                 raise GraphQLError('Not an admin.')
             user = UserModel.objects.get(username=username)
+
         deleted_user = copy.deepcopy(user)
 
         try:
@@ -183,6 +209,8 @@ class EnableAccount(graphene.relay.ClientIDMutation):
         if not called_user.is_staff:
             raise GraphQLError('Not an admin.')
 
+        input['username'] = input.get('username').strip()
+
         enabled_user = UserModel.objects.get(username=input.get('username'))
         
         # Already enabled
@@ -211,6 +239,8 @@ class DisableAccount(graphene.relay.ClientIDMutation):
         # Admin rights
         if not called_user.is_staff:
             raise GraphQLError('Not an admin.')
+
+        input['username'] = input.get('username').strip()
 
         disabled_user = UserModel.objects.get(username=input.get('username'))
         
