@@ -1,5 +1,4 @@
 import graphene
-import traceback
 from django.db import IntegrityError
 from graphql import GraphQLError
 from backend.utils import clean_input 
@@ -99,7 +98,7 @@ class JoinThread(graphene.Mutation):
         try:
             membership = ThreadMemberModel(user=info.context.user, thread=thread)
         except Exception as e:
-            raise GraphQLError(traceback.format_exc())
+            raise GraphQLError(e)
         else:
             membership.save()
         return JoinThread(membership=membership)
@@ -123,7 +122,7 @@ class LeaveThread(graphene.Mutation):
                 thread=thread
             ).get()
         except Exception as e:
-            raise GraphQLError(traceback.format_exc())
+            raise GraphQLError(e)
         else:
             membership.delete()
         return LeaveThread(successful=True)
@@ -152,7 +151,7 @@ class Promote(graphene.relay.ClientIDMutation):
                 thread=thread
             ).get()
         except Exception as e:
-            raise GraphQLError(traceback.format_exc())
+            raise GraphQLError(e)
         else:
             membership.is_admin = True
             membership.save()
@@ -181,7 +180,7 @@ class Demote(graphene.relay.ClientIDMutation):
                 thread=thread
             ).get()
         except Exception as e:
-            raise GraphQLError(traceback.format_exc())
+            raise GraphQLError(e)
         else:
             membership.is_admin = False
             membership.save()
@@ -194,11 +193,21 @@ class DeleteThread(graphene.Mutation):
     Deletion of posts within thread is on CASCADE mode.
     """
     class Arguments:
-        name = graphene.String(required=True, description="Name of the thread")
+        thread_name = graphene.String(required=True, description="Name of the thread")
 
     ' Fields '
-    thread = graphene.Field(ThreadNode)
+    successful = graphene.Boolean()
 
-    def mutate(self, info, username):
-        # TODO: check if its an admin of the thread
-        pass
+    def mutate(self, info, thread_name):
+        try: 
+            thread = ThreadModel.objects.get(name=thread_name)
+            membership = ThreadMemberModel.objects.filter(
+                user=info.context.user, thread=thread
+            ).get()
+            if membership.is_admin:
+                thread.delete()
+            else:
+                raise Exception('Not an admin');
+        except Exception as e:
+            raise GraphQLError(e)
+        return DeleteThread(successful=True)
