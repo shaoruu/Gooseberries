@@ -163,7 +163,7 @@ class DeleteAccount(graphene.Mutation):
         username = graphene.String(description="Deleted user's username")
 
     ' Fields '
-    user = graphene.Field(UserNode)
+    successful = graphene.Boolean()
 
     def mutate(self, info, username):
         if info.context.user.is_anonymous:
@@ -178,8 +178,6 @@ class DeleteAccount(graphene.Mutation):
                 raise GraphQLError('Not an admin.')
             user = UserModel.objects.get(username=username)
 
-        deleted_user = copy.deepcopy(user)
-
         try:
             if not username:
                 logout(info.context)
@@ -187,7 +185,7 @@ class DeleteAccount(graphene.Mutation):
         except:
             raise GraphQLError('Failed to delete account.')
 
-        return DeleteAccount(user=deleted_user)
+        return DeleteAccount(successful=True)
 
 
 class EnableAccount(graphene.relay.ClientIDMutation):

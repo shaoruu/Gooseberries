@@ -35,8 +35,14 @@ class CreateThread(graphene.relay.ClientIDMutation):
         if ThreadModel.objects.filter(name=cleaned_input.get('name')).first():
             raise GraphQLError('Thread name already taken.')
 
+        # Creating thread
         new_thread = ThreadModel(**cleaned_input)
         new_thread.save()
+
+        # Adding creator to the thread
+        new_membership = ThreadMemberModel(user=called_user, thread=new_thread)
+        new_membership.save()
+
         return CreateThread(thread=new_thread)
 
 
@@ -81,51 +87,105 @@ class JoinThread(graphene.Mutation):
     Adds the calling user to the thread with the provided thread name
     """
     class Arguments:
-        name = graphene.String(required=True, description="Name of the target thread")
+        thread_name = graphene.String(required=True, description="Name of the targeted thread")
 
     ' Fields '
     # thread = graphene.Field(ThreadNode)
     # user   = graphene.Field(UserNode)
     membership = graphene.Field(ThreadMemberNode)
     
-    def mutate(self, info, name):
-        thread = ThreadModel.objects.get(name=name)
+    def mutate(self, info, thread_name):
+        thread = ThreadModel.objects.get(name=thread_name)
         try:
             membership = ThreadMemberModel(user=info.context.user, thread=thread)
-            membership.save()
         except Exception as e:
             raise GraphQLError(traceback.format_exc())
+        else:
+            membership.save()
         return JoinThread(membership=membership)
 
 
-# class LeaveThread(graphene.Mutation):
-    # pass
+class LeaveThread(graphene.Mutation):
+    """
+    Removes the user's membership for the thread.
+    """
+    class Arguments:
+        thread_name = graphene.String(required=True, description="Name of the targeted thread")
+
+    ' Fields '
+    successful = graphene.Boolean()
+
+    def mutate(self, info, thread_name):
+        thread = ThreadModel.objects.get(name=thread_name)
+        try:
+            membership = ThreadMemberModel.objects.filter(
+                user=info.context.user,
+                thread=thread
+            ).get()
+        except Exception as e:
+            raise GraphQLError(traceback.format_exc())
+        else:
+            membership.delete()
+        return LeaveThread(successful=True)
 
 
-# class SetAdmin(graphene.relay.ClientIDMutation):
-    # """
-    # Set the user with the provided username an 
-    # admin of the thread.
-    # """
-    # class Input:
-        # thread_name = graphene.String(required=True, description="The name of the thread")
-        # username = graphene.String(required=True, description="User's username")
+class Promote(graphene.relay.ClientIDMutation):
+    """
+    Set the user with the provided username an 
+    admin of the thread.
+    """
+    class Input:
+        thread_name = graphene.String(required=True, description="The name of the thread")
+        username    = graphene.String(required=True, description="User's username")
 
-    # ' Fields '
-    # thread = graphene.Field(ThreadNode)
-    # user   = graphene.Field(UserNode)
+    ' Fields '
+    membership = graphene.Field(ThreadMemberNode)
 
-    # def mutate(self, info, **input):
-        # called_user = info.context.user
-        # thread = ThreadModel.get(name=input.get('name'))
-        
-        # "Getting the membership of the calling user"
-        # # membership
+    def mutate_and_get_payload(root, info, **input):
+        thread = ThreadModel.objects.get(name=input.get('thread_name'))
+        user   = UserModel.objects.get(username=input.get('username')) 
 
-        # if called_user.is_anonymous:
-            # raise GraphQLError('Not logged in.')
-        # if not called_user.is_staff:  # TODO: add if admin of thread
-            # raise GraphQLError('Not an admin')
+        "Getting the membership of the calling user"
+        try:
+            membership = ThreadMemberModel.objects.filter(
+                user=user,
+                thread=thread
+            ).get()
+        except Exception as e:
+            raise GraphQLError(traceback.format_exc())
+        else:
+            membership.is_admin = True
+            membership.save()
+        return Promote(membership=membership)
+
+
+class Demote(graphene.relay.ClientIDMutation):
+    """
+    Remove the user with the provided username from the admin list
+    """
+    class Input:
+        thread_name = graphene.String(required=True, description="The name of the thread")
+        username    = graphene.String(required=True, description="User's username")
+    
+    ' Fields '
+    membership = graphene.Field(ThreadMemberNode)
+
+    def mutate_and_get_payload(root, info, **input):
+        thread = ThreadModel.objects.get(name=input.get('thread_name'))
+        user   = UserModel.objects.get(username=input.get('username')) 
+
+        "Getting the membership of the calling user"
+        try:
+            membership = ThreadMemberModel.objects.filter(
+                user=user,
+                thread=thread
+            ).get()
+        except Exception as e:
+            raise GraphQLError(traceback.format_exc())
+        else:
+            membership.is_admin = False
+            membership.save()
+        return Demote(membership=membership)
 
 
 class DeleteThread(graphene.Mutation):

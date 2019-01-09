@@ -28,7 +28,7 @@ class Thread(models.Model):
 
 class ThreadMember(models.Model):
     thread   = models.ForeignKey(Thread, related_name="memberships", on_delete=models.CASCADE)
-    user     = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="threads", on_delete=models.CASCADE)
+    user     = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="thread_memberships", on_delete=models.CASCADE)
     is_admin = models.BooleanField(default=False)
     nickname = models.CharField(max_length=25, default="")
 
