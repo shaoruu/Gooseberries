@@ -1,7 +1,7 @@
 import graphene
 from graphql import GraphQLError
 from backend.threads.schemas.queries import ThreadFilter, ThreadNode
-from backend.threads.schemas.mutations import CreateThread, UpdateThread
+from backend.threads.schemas.mutations import CreateThread, UpdateThread, JoinThread
 from graphene_django.filter import DjangoFilterConnectionField
 from backend.threads.models import Thread as ThreadModel
 
@@ -17,3 +17,4 @@ class Query(graphene.ObjectType):
 class Mutation(graphene.ObjectType):
     create_thread = CreateThread.Field()
     update_thread = UpdateThread.Field()
+    join_thread   = JoinThread.Field()

@@ -1,7 +1,7 @@
 import graphene
 import django_filters
 from graphene_django import DjangoObjectType
-from backend.threads.models import Thread
+from backend.threads.models import Thread, ThreadMember
 
 
 class ThreadFilter(django_filters.FilterSet):
@@ -17,4 +17,10 @@ class ThreadFilter(django_filters.FilterSet):
 class ThreadNode(DjangoObjectType):
     class Meta:
         model = Thread
+        interfaces = (graphene.relay.Node, )
+
+
+class ThreadMemberNode(DjangoObjectType):
+    class Meta:
+        model = ThreadMember
         interfaces = (graphene.relay.Node, )

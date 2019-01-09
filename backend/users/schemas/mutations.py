@@ -134,25 +134,24 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
 
         return UpdateProfile(user=updated_user)
 
-
-class SetStaff(graphene.Mutation):
+class ToggleStaff(graphene.Mutation):
     """
-    Make the calling user a staff.
-    No input required.
+    Toggle whether the user is a staff or not.
     """
     
     ' Fields '
     user = graphene.Field(UserNode)
+
+    class Arguments:
+        username = graphene.String(required=True, description="User's username")
     
-    def mutate(self, info):
-        user = info.context.user
-        if user.is_anonymous:
-            raise GraphQLError('Not logged in.')
-        user.is_staff = True
+    def mutate(self, info, **input):
+        user = UserModel.objects.get(username=input.get('username'))
+        user.is_staff = not user.is_staff
         user.save()
-        return SetStaff(user=user)
-        
-    
+        return ToggleStaff(user=user)
+ 
+   
 
 class DeleteAccount(graphene.Mutation):
     """
@@ -253,5 +252,43 @@ class DisableAccount(graphene.relay.ClientIDMutation):
         return DisableAccount(user=disabled_user)
         
 
+# class SetStaff(graphene.Mutation):
+    # """
+    # Make the calling user a staff.
+    # """
+    
+    # ' Fields '
+    # user = graphene.Field(UserNode)
 
+    # class Arguments:
+        # username = graphene.String(required=True, description="User's username")
+    
+    # def mutate(self, info, **input):
+        # user = UserModel.objects.get(username=input.get('username'))
+        # if user.is_staff:
+            # raise GraphQLError('User is already a staff.')
+        # user.is_staff = True
+        # user.save()
+        # return SetStaff(user=user)
+ 
+
+# class RemoveStaff(graphene.Mutation):
+    # """
+    # Removing the staff position of the user with the provided username.
+    # """
+    
+    # ' Fields '
+    # user = graphene.Field(UserNode)
+
+    # class Arguments:
+        # username = graphene.String(required=True, description="User's username")
+    
+    # def mutate(self, info, **input):
+        # user = UserModel.objects.get(username=input.get('username'))
+        # if not user.is_staff:
+            # raise GraphQLError('User is not a staff.')
+        # user.is_staff = False 
+        # user.save()
+        # return SetStaff(user=user)      
+ 
 

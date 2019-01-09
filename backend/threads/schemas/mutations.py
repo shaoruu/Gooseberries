@@ -1,8 +1,12 @@
 import graphene
+import traceback
+from django.db import IntegrityError
 from graphql import GraphQLError
 from backend.utils import clean_input 
-from backend.threads.models import Thread as ThreadModel
-from backend.threads.schemas.queries import ThreadNode
+from backend.threads.models import Thread as ThreadModel, ThreadMember as ThreadMemberModel
+from backend.threads.schemas.queries import ThreadNode, ThreadMemberNode
+from backend.users.models import User as UserModel
+from backend.users.schemas.queries import UserNode
 
 
 class CreateThread(graphene.relay.ClientIDMutation):
@@ -72,10 +76,69 @@ class UpdateThread(graphene.relay.ClientIDMutation):
         return UpdateThread(thread=updated_thread)
 
 
+class JoinThread(graphene.Mutation):
+    """
+    Adds the calling user to the thread with the provided thread name
+    """
+    class Arguments:
+        name = graphene.String(required=True, description="Name of the target thread")
+
+    ' Fields '
+    # thread = graphene.Field(ThreadNode)
+    # user   = graphene.Field(UserNode)
+    membership = graphene.Field(ThreadMemberNode)
+    
+    def mutate(self, info, name):
+        thread = ThreadModel.objects.get(name=name)
+        try:
+            membership = ThreadMemberModel(user=info.context.user, thread=thread)
+            membership.save()
+        except Exception as e:
+            raise GraphQLError(traceback.format_exc())
+        return JoinThread(membership=membership)
 
 
+# class LeaveThread(graphene.Mutation):
+    # pass
 
 
+# class SetAdmin(graphene.relay.ClientIDMutation):
+    # """
+    # Set the user with the provided username an 
+    # admin of the thread.
+    # """
+    # class Input:
+        # thread_name = graphene.String(required=True, description="The name of the thread")
+        # username = graphene.String(required=True, description="User's username")
+
+    # ' Fields '
+    # thread = graphene.Field(ThreadNode)
+    # user   = graphene.Field(UserNode)
+
+    # def mutate(self, info, **input):
+        # called_user = info.context.user
+        # thread = ThreadModel.get(name=input.get('name'))
+        
+        # "Getting the membership of the calling user"
+        # # membership
+
+        # if called_user.is_anonymous:
+            # raise GraphQLError('Not logged in.')
+        # if not called_user.is_staff:  # TODO: add if admin of thread
+            # raise GraphQLError('Not an admin')
 
 
+class DeleteThread(graphene.Mutation):
+    """
+    Delete thread with provided unique name.
+    Deletion of posts within thread is on CASCADE mode.
+    """
+    class Arguments:
+        name = graphene.String(required=True, description="Name of the thread")
 
+    ' Fields '
+    thread = graphene.Field(ThreadNode)
+
+    def mutate(self, info, username):
+        # TODO: check if its an admin of the thread
+        pass
