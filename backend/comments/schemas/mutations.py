@@ -37,7 +37,7 @@ class CreateCommentOnComment(graphene.relay.ClientIDMutation):
     comment unique identifier.
     """
     class Input:
-        comment_unique_identifier = graphene.String(required=True, description="Unique identifier of the post")
+        comment_unique_identifier = graphene.String(required=True, description="Unique identifier of the comment")
         content                   = graphene.String(required=True, description="Content of the comment")
 
     ' Fields '
@@ -56,7 +56,24 @@ class CreateCommentOnComment(graphene.relay.ClientIDMutation):
         return CreateCommentOnComment(comment=new_comment)
 
 
+class DeleteComment(graphene.Mutation):
+    """
+    Delete comment with the provided unique identifier.
+    """
+    class Arguments:
+        comment_unique_identifier = graphene.String(required=True, description="Unique identifier of the comment")
 
+    ' Fields '
+    successful = graphene.Boolean()
+
+    def mutate(self, info, comment_unique_identifier):
+        try:
+            deleted_comment = CommentModel.objects.get(unique_identifier=comment_unique_identifier)
+        except Exception as e:
+            raise GraphQLError(e)
+        else:
+            deleted_comment.delete()
+        return DeleteComment(successful=True)
 
 
 
