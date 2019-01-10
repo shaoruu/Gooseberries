@@ -25,6 +25,9 @@ class Thread(models.Model):
         ''' On save, update timestamps '''
         return super(Thread, self).save(*args, **kwargs)
 
+    def toggle_open(self):
+        self.is_open = not self.is_open
+
 
 class ThreadMember(models.Model):
     thread   = models.ForeignKey(Thread, related_name="memberships", on_delete=models.CASCADE)
@@ -34,3 +37,6 @@ class ThreadMember(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def set_nickname(self, nickname):
+        self.nickname = nickname

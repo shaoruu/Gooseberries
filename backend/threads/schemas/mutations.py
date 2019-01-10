@@ -101,6 +101,9 @@ class JoinThread(graphene.Mutation):
     
     def mutate(self, info, thread_name):
         thread = ThreadModel.objects.get(name=thread_name)
+        " No joining if thread is closed "
+        if thread.is_open:
+            raise GraphQLError('Thread is closed.')
         try:
             membership = ThreadMemberModel(user=info.context.user, thread=thread)
         except Exception as e:
@@ -192,6 +195,56 @@ class Demote(graphene.relay.ClientIDMutation):
             membership.save()
         return Demote(membership=membership)
 
+
+class SetNickname(graphene.Mutation):
+    """
+    Sets user's uesrname to the given username within a thread
+    """
+    class Arguments:
+        thread_name = graphene.String(required=True, description="Name of the thread")
+        username    = graphene.String(required=True, description="User's username")
+        nickname    = graphene.String(required=True, description="New nickname")
+
+    ' Fields '
+    membership = graphene.Field(ThreadMemberNode)
+
+    def mutate(self, info, thread_name, username, nickname):
+        try:
+            membership = ThreadMemberModel.objects.filter(
+                user__username__exact=username,
+                thread__name__exact=thread_name
+            ).get()
+        except Exception as e:
+            raise GraphQLError(e)
+        else:
+            membership.set_nickname(nickname)
+            membership.save()
+        return SetNickname(membership=membership)
+
+
+class ToggleThreadMode(graphene.Mutation):
+    """
+    Toggles whether the thread is open or closed;
+    switches True/False for is_open
+    """
+    class Arguments:
+        thread_name = graphene.String(required=True, description="Name of the thread")
+
+    ' Fields '
+    thread = graphene.Field(ThreadNode)
+
+    def mutate(self, info, thread_name):
+        try:
+            thread = ThreadModel.objects.get(name=thread_name)
+            if not is_admin(info.context.user, thread):
+                raise Exception("Not an admin.")
+        except Exception as e:
+            raise GraphQLError(e)
+        else:
+            thread.toggle_open()
+            thread.save()
+        return ToggleThreadMode(thread=thread)
+            
 
 class DeleteThread(graphene.Mutation):
     """

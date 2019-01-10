@@ -3,7 +3,8 @@ import traceback
 from graphql import GraphQLError
 from backend.threads.schemas.queries import ThreadFilter, ThreadNode, ThreadMemberNode
 from backend.threads.schemas.mutations import (
-    CreateThread, UpdateThread, JoinThread, LeaveThread, Promote, Demote, DeleteThread
+    CreateThread, UpdateThread, JoinThread, LeaveThread, 
+    Promote, Demote, DeleteThread, SetNickname, ToggleThreadMode
 )
 from graphene_django.filter import DjangoFilterConnectionField
 from backend.threads.models import Thread as ThreadModel, ThreadMember as ThreadMemberModel
@@ -36,10 +37,12 @@ class Query(graphene.ObjectType):
 
 
 class Mutation(graphene.ObjectType):
-    create_thread = CreateThread.Field()
-    update_thread = UpdateThread.Field()
-    delete_thread = DeleteThread.Field()
-    join_thread   = JoinThread.Field()
-    leave_thread  = LeaveThread.Field()
-    promote       = Promote.Field()
-    demote        = Demote.Field()
+    create_thread      = CreateThread.Field()
+    update_thread      = UpdateThread.Field()
+    delete_thread      = DeleteThread.Field()
+    join_thread        = JoinThread.Field()
+    leave_thread       = LeaveThread.Field()
+    set_nickname       = SetNickname.Field()
+    toggle_thread_mode = ToggleThreadMode.Field()
+    promote            = Promote.Field()
+    demote             = Demote.Field()
