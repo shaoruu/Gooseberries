@@ -23,12 +23,46 @@ class CreateCommentOnPost(graphene.relay.ClientIDMutation):
             raise GraphQLError('Not logged in.')
         post = PostModel.objects.get(unique_identifier=input.get('post_unique_identifier'))
         try:
-            new_comment = CommentModel(content_object=post, content=input.get('content'), user=info.context.user)
+            new_comment = CommentModel(content_object=post, content=clean_input(input).get('content'), user=info.context.user)
         except Exception as e:
             raise GraphQLError(e)
         else:
             new_comment.save()
         return CreateCommentOnPost(comment=new_comment)
+
+
+class CreateCommentOnComment(graphene.relay.ClientIDMutation):
+    """
+    Creates a comment under a comment with the specified
+    comment unique identifier.
+    """
+    class Input:
+        comment_unique_identifier = graphene.String(required=True, description="Unique identifier of the post")
+        content                   = graphene.String(required=True, description="Content of the comment")
+
+    ' Fields '
+    comment = graphene.Field(CommentNode)
+
+    def mutate_and_get_payload(root, info, **input):
+        if info.context.user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        comment = CommentModel.objects.get(unique_identifier=input.get('comment_unique_identifier'))
+        try:
+            new_comment = CommentModel(content_object=comment, content=clean_input(input).get('content'), user=info.context.user)
+        except Exception as e:
+            raise GraphQLError(e)
+        else:
+            new_comment.save()
+        return CreateCommentOnComment(comment=new_comment)
+
+
+
+
+
+
+
+
+
 
 
 
