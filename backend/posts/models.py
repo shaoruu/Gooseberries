@@ -4,8 +4,9 @@ from django.utils import timezone
 from backend.threads.models import Thread 
 from backend.utils import id_generator
 
+
 class Post(models.Model):
-    unique_identifier = models.CharField(max_length=8, default=id_generator)
+    unique_identifier = models.CharField(max_length=8, default=id_generator, primary_key=True)
     title = models.CharField(max_length=100)
     content = models.TextField(max_length=10000)
     published = models.BooleanField(default=False)

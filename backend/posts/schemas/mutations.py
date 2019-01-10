@@ -44,16 +44,51 @@ class CreatePostOnThread(graphene.relay.ClientIDMutation):
         return CreatePostOnThread(post=post)
         
 
-# class UpdatePostOnThread(graphene.relay.ClientIDMutation):
-    # """
-    # Fetches and changes the data of the specified post,
-    # returns the udpated post to user
-    # """
-    # class Input:
+class UpdatePostOnThread(graphene.relay.ClientIDMutation):
+    """
+    Fetches and changes the data of the specified post,
+    returns the udpated post to user
+    """
+    class Input:
+        post_unique_identifier = graphene.String(required=True, description="Unique ID of the thread")
+        title = graphene.String(description="New title")
+        content = graphene.String(description="New content")
+
+    ' Fields '
+    post = graphene.Field(PostNode)
+
+    def mutate_and_get_payload(root, info, **input):
+        if info.context.user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        updated_post = PostModel.objects.get(unique_identifier=input.pop('post_unique_identifier'))
         
+        for (key, value) in clean_input(input).items():
+            setattr(updated_post, key, value)
+        updated_post.save()
+
+        return UpdatePostOnThread(post=updated_post)
 
 
-# class DeletePostOnThread(graphene.relay.ClientIDMutation):
+class DeletePostOnThread(graphene.Mutation):
+    """
+    Deletes the specified post on the thread. 
+    """
+    class Arguments:
+        post_unique_identifier = graphene.String(required=True, description="The unique identifier of the post to delete")
+
+    ' Fields '
+    successful = graphene.Boolean()
+
+    def mutate(root, info, post_unique_identifier):
+        try:
+            deleted_post = PostModel.objects.get(unique_identifier=post_unique_identifier)
+        except Exception as e:
+            raise GraphQLError(e)
+        else: 
+            deleted_post.delete()
+        return DeletePostOnThread(successful=True)
+
+
 
 
 

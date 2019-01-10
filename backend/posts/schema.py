@@ -1,6 +1,8 @@
 import graphene
 from backend.posts.schemas.queires import PostNode, PostFilter
-from backend.posts.schemas.mutations import CreatePostOnThread
+from backend.posts.schemas.mutations import (
+    CreatePostOnThread, UpdatePostOnThread, DeletePostOnThread
+)
 from graphene_django.filter import DjangoFilterConnectionField
 
 
@@ -14,3 +16,5 @@ class Query(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     create_post_on_thread = CreatePostOnThread.Field()
+    update_post_on_thread = UpdatePostOnThread.Field()
+    delete_post_on_thread = DeletePostOnThread.Field()
