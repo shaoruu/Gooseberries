@@ -56,6 +56,29 @@ class CreateCommentOnComment(graphene.relay.ClientIDMutation):
         return CreateCommentOnComment(comment=new_comment)
 
 
+class UpdateComment(graphene.relay.ClientIDMutation):
+    """
+    Fetcehs and changes the comment data of the specified comment;
+    returns the updated comment to user.
+    """
+    class Input:
+        comment_unique_identifier = graphene.String(required=True, description="Unique identifier of the comment")
+        content = graphene.String(required=True, description="New content")
+
+    ' Fields '
+    comment = graphene.Field(CommentNode)
+
+    def mutate_and_get_payload(root, info, **input):
+        if info.context.user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        updated_comment = CommentModel.objects.get(unique_identifier=input.get('comment_unique_identifier'))
+        
+        updated_comment.content = input.get('content')
+        updated_comment.save()
+
+        return UpdateComment(comment=updated_comment)
+
+
 class DeleteComment(graphene.Mutation):
     """
     Delete comment with the provided unique identifier.
@@ -74,8 +97,6 @@ class DeleteComment(graphene.Mutation):
         else:
             deleted_comment.delete()
         return DeleteComment(successful=True)
-
-
 
 
 

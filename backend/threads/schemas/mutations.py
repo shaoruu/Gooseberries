@@ -102,7 +102,7 @@ class JoinThread(graphene.Mutation):
     def mutate(self, info, thread_name):
         thread = ThreadModel.objects.get(name=thread_name)
         " No joining if thread is closed "
-        if thread.is_open:
+        if not thread.is_open:
             raise GraphQLError('Thread is closed.')
         try:
             membership = ThreadMemberModel(user=info.context.user, thread=thread)
@@ -150,14 +150,14 @@ class Promote(graphene.relay.ClientIDMutation):
     membership = graphene.Field(ThreadMemberNode)
 
     def mutate_and_get_payload(root, info, **input):
-        thread = ThreadModel.objects.get(name=input.get('thread_name'))
-        user   = UserModel.objects.get(username=input.get('username')) 
+        # thread = ThreadModel.objects.get(name=input.get('thread_name'))
+        # user   = UserModel.objects.get(username=input.get('username')) 
 
         "Getting the membership of the calling user"
         try:
             membership = ThreadMemberModel.objects.filter(
-                user=user,
-                thread=thread
+                user__username=clean_input(input).get('username'),
+                thread__name=clean_input(input).get('thread_name')
             ).get()
         except Exception as e:
             raise GraphQLError(e)
@@ -179,14 +179,14 @@ class Demote(graphene.relay.ClientIDMutation):
     membership = graphene.Field(ThreadMemberNode)
 
     def mutate_and_get_payload(root, info, **input):
-        thread = ThreadModel.objects.get(name=input.get('thread_name'))
-        user   = UserModel.objects.get(username=input.get('username')) 
+        # thread = ThreadModel.objects.get(name=input.get('thread_name'))
+        # user   = UserModel.objects.get(username=input.get('username')) 
 
         "Getting the membership of the calling user"
         try:
             membership = ThreadMemberModel.objects.filter(
-                user=user,
-                thread=thread
+                user__username=clean_input(input).get('username'),
+                thread__name=clean_input(input).get('thread_name')
             ).get()
         except Exception as e:
             raise GraphQLError(e)

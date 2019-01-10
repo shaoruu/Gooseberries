@@ -46,7 +46,7 @@ class CreatePostOnThread(graphene.relay.ClientIDMutation):
 
 class UpdatePostOnThread(graphene.relay.ClientIDMutation):
     """
-    Fetches and changes the data of the specified post,
+    Fetches and changes the data of the specified post;
     returns the udpated post to user
     """
     class Input:

@@ -15,9 +15,15 @@ class ThreadFilter(django_filters.FilterSet):
 
 
 class ThreadNode(DjangoObjectType):
+    admins = graphene.List(lambda: ThreadMemberNode) 
+
     class Meta:
         model = Thread
         interfaces = (graphene.relay.Node, )
+
+    def resolve_admins(self, info):
+        return [membership for membership in ThreadMember.objects.all() if membership.thread.name == self.name and membership.is_admin]
+
 
 
 class ThreadMemberNode(DjangoObjectType):
