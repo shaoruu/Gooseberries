@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'graphene_django',
     'backend.users',
     'backend.threads',
+    'backend.posts',
 ]
 
 MIDDLEWARE = [
