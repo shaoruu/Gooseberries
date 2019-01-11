@@ -1,7 +1,9 @@
 import graphene
 from backend.likes.schemas.queries import LikeNode
 from backend.likes.models import Like
-from backend.likes.schemas.mutations import LikePost
+from backend.likes.schemas.mutations import (
+    LikePost, LikeComment, UnlikePost, UnlikeComment
+)
 
 
 class Query(graphene.ObjectType):
@@ -17,3 +19,6 @@ class Query(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     like_post = LikePost.Field()
+    like_comment = LikeComment.Field()
+    unlike_post = UnlikePost.Field()
+    unlike_comment = UnlikeComment.Field()

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from backend.threads.models import Thread 
+from backend.likes.models import Like
 from backend.utils import id_generator
 
 
@@ -18,6 +19,8 @@ class Post(models.Model):
     ' Timestamps '
     date_created = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(auto_now_add=True)
+
+
 
     REQUIRED_FIELDS = ['title', 'description', 'user', 'thread']
 

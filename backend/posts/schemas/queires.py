@@ -6,6 +6,8 @@ from backend.comments.schemas.queries import CommentNode, CommentFilter
 from django.contrib.contenttypes.models import ContentType
 from graphene_django.filter import DjangoFilterConnectionField
 from backend.comments.models import Comment
+from backend.likes.models import Like
+from backend.likes.schemas.queries import LikeNode
 
 
 class PostFilter(django_filters.FilterSet):
@@ -21,6 +23,7 @@ class PostFilter(django_filters.FilterSet):
 
 class PostNode(DjangoObjectType):
     comments = DjangoFilterConnectionField(CommentNode, filterset_class=CommentFilter) 
+    likes = graphene.List(LikeNode)
     class Meta:
         model = Post
         interfaces = (graphene.relay.Node, )
@@ -29,3 +32,8 @@ class PostNode(DjangoObjectType):
         content_type = ContentType.objects.get_for_model(Post)
         identifier = self.unique_identifier
         return Comment.objects.filter(content_type=content_type, identifier=identifier)
+
+    def resolve_likes(self, info, **kwargs):
+        content_type = ContentType.objects.get_for_model(Post)
+        identifier = self.unique_identifier
+        return Like.objects.filter(content_type=content_type, identifier=identifier)
