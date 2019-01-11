@@ -47,8 +47,8 @@ class User(AbstractUser):
             self.last_login = timezone.now()
         return super(User, self).save(*args, **kwargs)
 
-    @property
-    def is_superuser(self):
-        "Is the user a staff of the site?"
-        return is_staff
+    # @property
+    # def is_superuser(self):
+        # "Is the user a staff of the site?"
+        # return is_staff
     

@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'pipeline',
+    'corsheaders',
     'graphene_django',
     'backend.comments',
     'backend.likes',
@@ -145,3 +145,7 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'users.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+}
