@@ -22,7 +22,7 @@ class Comment(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(auto_now_add=True)
 
-    REQUIRED_FIELDS = ['content', 'user', 'post']
+    REQUIRED_FIELDS = ['content', 'user', 'content_type', 'identifier', 'content_object']
 
     class Meta:
         ordering = ['date_created', 'date_updated', 'content']

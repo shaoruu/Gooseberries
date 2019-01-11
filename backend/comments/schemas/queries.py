@@ -10,7 +10,8 @@ class CommentFilter(django_filters.FilterSet):
     class Meta:
         model = Comment
         fields = {
-            'content': ['icontains']
+            'content': ['icontains'],
+            'user__username': ['exact']
         }
 
 

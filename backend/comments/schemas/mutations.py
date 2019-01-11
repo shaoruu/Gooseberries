@@ -15,7 +15,7 @@ class CreateCommentOnPost(graphene.relay.ClientIDMutation):
         post_unique_identifier = graphene.String(required=True, description="Unique identifier of the post")
         content                = graphene.String(required=True, description="Content of the comment")
     
-    ' Field '
+    ' Fields '
     comment = graphene.Field(CommentNode)
 
     def mutate_and_get_payload(root, info, **input):

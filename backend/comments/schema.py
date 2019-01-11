@@ -6,12 +6,16 @@ from backend.comments.schemas.mutations import (
     UpdateComment,
     DeleteComment,
 )
+from backend.comments.models import Comment
 from graphene_django.filter import DjangoFilterConnectionField
 
 
 class Query(graphene.ObjectType):
-    comment = graphene.relay.Node.Field(CommentNode)
+    comment = graphene.Field(CommentNode, unique_identifier=graphene.String(required=True, description="The unique identifier of the comment author"))
     comments = DjangoFilterConnectionField(CommentNode, filterset_class=CommentFilter)
+
+    def resolve_comment(self, info, unique_identifier):
+        return Comment.objects.get(unique_identifier=unique_identifier)
 
 
 class Mutation(graphene.ObjectType):
