@@ -12,6 +12,6 @@ Gooseberries [frontend unfinished]
 4. Visit localhost:8000/graphql
 ## To shut down server and deactivate the environment:
 1. ctrl+C to stop the server 
-2. the 'exit' command or ctrl+D to exit the pipenv session
+2. use the 'exit' command or ctrl+D to exit the pipenv session
 3. to remove the virtualenv: pipenv --rm
 
