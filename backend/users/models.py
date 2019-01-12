@@ -28,7 +28,7 @@ class User(AbstractUser):
         return self.username
 
     def get_full_name(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.first_name + self.last_name 
 
     def enable(self):
         self.is_active = True
