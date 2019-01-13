@@ -37,12 +37,13 @@ export default class Login extends Component {
 							this._confirm(data)
 							return <Redirect to="/home" />
 						}
+						// TODO: Create error checks
 						return (
 							<div>
 								<Formik
 									initialValues={{ username: '', password: '' }}
 									validationSchema={LOGIN_SCHEMA}
-									onSubmit={values => {
+									onSubmit={(values, { resetForm, setErrors }) => {
 										loginUser({
 											variables: {
 												username: values.username,
@@ -59,26 +60,34 @@ export default class Login extends Component {
 										handleSubmit
 									}) => {
 										return (
-											<form onSubmit={handleSubmit}>
-												<input
-													type="Text"
-													name="username"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.username}
-												/>
+											<form onSubmit={handleSubmit} className={classes.Form}>
+												<label for="username">
+													<span className={classes.label}>Username</span>
+													<input
+														type="Text"
+														id="username"
+														name="username"
+														onChange={handleChange}
+														onBlur={handleBlur}
+														value={values.username}
+													/>
+												</label>
 												{touched.username && errors && errors.username && (
-													<h1>{errors.username}</h1>
+													<p>{errors.username}</p>
 												)}
-												<input
-													type="Password"
-													name="password"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.password}
-												/>
+												<label for="password">
+													<span className={classes.label}>Password</span>
+													<input
+														type="Password"
+														id="password"
+														name="password"
+														onChange={handleChange}
+														onBlur={handleBlur}
+														value={values.password}
+													/>
+												</label>
 												{touched.password && errors && errors.password && (
-													<h1>{errors.password}</h1>
+													<p>{errors.password}</p>
 												)}
 												<div>
 													<button type="Submit">Submit</button>

@@ -1,4 +1,74 @@
 .Login {
 	/* top: 150px;
-	position: relative; */
+   position: relative; */
+	background-size: contain;
+	background-image: url(../../../assets/loginBackground.jpg);
+	height: 100vh;
+}
+
+.Login h1 {
+	text-transform: uppercase;
+	font-family: 'Sarabun', sans-serif;
+	font-size: 5rem;
+	padding: 0;
+	text-align: center;
+	margin: auto;
+	color: rgb(221, 221, 221);
+}
+
+.Form {
+	display: flex;
+	width: 60%;
+	margin: auto;
+	margin-top: 5rem;
+	border-radius: 20px;
+	background: rgba(153, 153, 153, 0.8);
+	flex-direction: column;
+	align-items: center;
+	padding: 3rem 0;
+}
+
+/* .Form p {
+	text-align: center;
+	font-size: 1.3rem;
+} */
+
+.Form span {
+	display: block;
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+.Form label,
+.Form input {
+	position: relative;
+	margin: auto;
+	width: auto;
+	max-width: 280px;
+}
+
+.Form input {
+	margin: 1rem auto;
+	text-align: center;
+	border: none;
+	border-bottom: 1px rgba(255, 255, 255, 0.527) solid;
+	background: rgba(0, 0, 0, 0);
+	color: rgba(255, 255, 255, 0.678);
+	font-size: 2rem;
+}
+
+.Form button {
+	margin: 20px;
+}
+
+.Form p {
+	color: rgb(253, 166, 166);
+}
+
+.Form input:focus {
+	outline: none;
+}
+
+.Form button:focus {
+	outline: none;
 }
