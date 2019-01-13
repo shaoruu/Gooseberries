@@ -1,8 +1,17 @@
 .Post {
 	position: relative;
-	border: 1px solid #949494;
-	margin: 2em;
+	border: 1px solid rgba(255, 255, 255, 0);
+	margin: 1em auto;
+	max-width: 40rem;
+	min-width: 30rem;
 	padding: 3em;
+	background: rgb(15, 15, 15);
+	color: white;
+	border-radius: 10px;
+}
+
+.Post:hover {
+	border: 1px solid #949494;
 }
 
 .tag {

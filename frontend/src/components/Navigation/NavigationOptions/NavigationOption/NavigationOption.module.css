@@ -2,12 +2,14 @@
 }
 
 .NavigationOption a {
-	padding: 10px 15px;
+	padding: 0.5rem 1rem;
 	text-decoration: none;
 	text-transform: uppercase;
 	display: block;
-	font-size: 1rem;
-	color: rgba(0, 0, 0, 0.794);
+	font-size: 0.8rem;
+	color: white;
+	border-radius: 5px;
+	border: 1px white solid;
 }
 
 .NavigationOption a:hover {

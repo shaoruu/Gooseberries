@@ -13,12 +13,14 @@ const postList = props => {
 					dateCreated={dateCreated}
 					user={user}
 					thread={thread}
+					click={props.clickPost}
 				/>
 			)
 		}
 	)
-
-	return <ul className={classes.PostList}>{posts}</ul>
+	let classNames = [classes.PostList]
+	if (props.showMenu) classNames.push(classes.SideMenu)
+	return <ul className={classNames.join(' ')}>{posts}</ul>
 }
 
 export default postList

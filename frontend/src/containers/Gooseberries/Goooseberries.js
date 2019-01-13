@@ -27,13 +27,26 @@ class Gooseberries extends Component {
 		else this.setState({ auth: false })
 	}
 
+	handleSideMenu = () => {
+		this.setState({ showMenu: !this.state.showMenu })
+	}
+
 	render() {
 		return (
 			<div>
-				<Toolbar isLoggedIn={this.state.auth} handleLogo={this.handleLogo} />
+				<Toolbar
+					isLoggedIn={this.state.auth}
+					handleLogo={this.handleLogo}
+					sideButtonClick={this.handleSideMenu}
+				/>
 				<RouteListener checkAuth={this.handleAuth}>
 					<Switch>
-						<Route path="/home" component={Home} />
+						<Route
+							path="/home"
+							render={routeProps => (
+								<Home {...routeProps} showMenu={this.state.showMenu} />
+							)}
+						/>
 						<Route path="/login" component={Login} />
 						<Route path="/logout" component={Logout} />
 						<Route path="/profile/:userId" component={Profile} />
