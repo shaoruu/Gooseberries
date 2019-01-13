@@ -108,6 +108,7 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
     Update user's profile according to the provided optional arguments.
     """
     class Input:
+        username = graphene.String()
         first_name = graphene.String()
         last_name  = graphene.String()
         # profile_image
@@ -116,16 +117,14 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
     user = graphene.Field(UserNode)
 
     def mutate_and_get_payload(root, info, **input):
-        user = info.context.user
-        input = clean_input(input)
+        user = UserModel.objects.get(username=input.pop('username'))
+        filtered_input = clean_input(input)
 
         if user.is_anonymous:
             raise GraphQLError('Please login first to modify profile.')
 
-        if not validate_name(input.get('first_name')) or not validate_name(input.get('last_name')):
+        if not validate_name(filtered_input.get('first_name')) or not validate_name(filtered_input.get('last_name')):
             raise GraphQLError('Invalid first/last name.')
-        
-        filtered_input = remove_none(input) 
 
         updated_user = UserModel.objects.get(id=user.id)
         for (key, value) in filtered_input.items():

@@ -6,7 +6,7 @@ import { Mutation } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 
 import { AUTH_TOKEN } from '../../../constants'
-import LoginRequired from '../../../hoc/LoginRequired/LoginRequired'
+import NoneLogin from '../../../hoc/NoneLogin/NoneLogin'
 
 const LOGIN_SCHEMA = Yup.object().shape({
 	username: Yup.string().required('Username is required.'),
@@ -26,7 +26,7 @@ const LOGIN_MUTATION = gql`
 export default class Login extends Component {
 	render() {
 		return (
-			<LoginRequired elseRedirect="/home">
+			<NoneLogin elseRedirect="/home">
 				<h1>Log In</h1>
 				<Mutation mutation={LOGIN_MUTATION}>
 					{(loginUser, { loading, error, data }) => {
@@ -90,7 +90,7 @@ export default class Login extends Component {
 						)
 					}}
 				</Mutation>
-			</LoginRequired>
+			</NoneLogin>
 		)
 	}
 
