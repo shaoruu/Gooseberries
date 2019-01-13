@@ -1,7 +1,11 @@
 import React from 'react'
 
+import classes from './Logo.module.css'
+import Logo from '../../../../assets/logo.png'
+
 export default () => (
-	<div>
-		<h1>LOGO</h1>
+	<div className={classes.Logo}>
+		<img src={Logo} alt="Logo" />
+		<p>Gooseberries</p>
 	</div>
 )

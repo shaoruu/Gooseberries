@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom'
 
 import { AUTH_TOKEN } from '../../../constants'
 import NoneLogin from '../../../hoc/NoneLogin/NoneLogin'
+import classes from './Login.module.css'
 
 const LOGIN_SCHEMA = Yup.object().shape({
 	username: Yup.string().required('Username is required.'),
@@ -26,7 +27,7 @@ const LOGIN_MUTATION = gql`
 export default class Login extends Component {
 	render() {
 		return (
-			<NoneLogin elseRedirect="/home">
+			<NoneLogin elseRedirect="/home" className={classes.Login}>
 				<h1>Log In</h1>
 				<Mutation mutation={LOGIN_MUTATION}>
 					{(loginUser, { loading, error, data }) => {

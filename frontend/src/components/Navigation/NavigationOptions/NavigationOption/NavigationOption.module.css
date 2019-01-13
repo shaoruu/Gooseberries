@@ -1,0 +1,16 @@
+.NavigationOption {
+}
+
+.NavigationOption a {
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform: uppercase;
+	display: block;
+	font-size: 1rem;
+	color: rgba(0, 0, 0, 0.794);
+}
+
+.NavigationOption a:hover {
+	background: rgba(0, 0, 0, 0.034);
+	border-radius: 0.3em;
+}

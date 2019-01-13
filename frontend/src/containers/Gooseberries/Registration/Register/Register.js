@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { Formik } from 'formik'
 import gql from 'graphql-tag'
 import * as Yup from 'yup'
-import NoneLogin from '../../../../hoc/NoneLogin/NoneLogin'
 import { Redirect } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
+
+import NoneLogin from '../../../../hoc/NoneLogin/NoneLogin'
+import classes from './Register.module.css'
 
 const REGISTER_SCHEMA = Yup.object().shape({
 	username: Yup.string().required('Username is required.'),
@@ -40,7 +42,7 @@ const REGISTER_MUTATION = gql`
 export default class Register extends Component {
 	render() {
 		return (
-			<NoneLogin elseRedirect="/home">
+			<NoneLogin elseRedirect="/home" className={classes.Register}>
 				<h1>Sign Up</h1>
 				<Mutation mutation={REGISTER_MUTATION}>
 					{(registerUser, { loading, error, data }) => {

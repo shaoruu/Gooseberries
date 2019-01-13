@@ -4,6 +4,8 @@ import * as Yup from 'yup'
 import gql from 'graphql-tag'
 import { Redirect } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
+
+import classes from './MoreInfo.module.css'
 import NoneLogin from '../../../../hoc/NoneLogin/NoneLogin'
 import RegristrationSuccess from '../RegristrationSuccess/RegristrationSuccess'
 
@@ -30,7 +32,7 @@ export default class Register extends Component {
 	render() {
 		if (!this.props.location.state) return <Redirect to="/home" />
 		return (
-			<NoneLogin elseRedirect="/home">
+			<NoneLogin elseRedirect="/home" className={classes.MoreInfo}>
 				<h1>More Info for user {this.props.location.state.username}</h1>
 				<Mutation mutation={MOREINFO_MUTATION}>
 					{(updateUser, { loading, error, data }) => {

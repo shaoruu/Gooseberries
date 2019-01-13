@@ -1,6 +1,7 @@
 import React from 'react'
 
 import NavigationOption from './NavigationOption/NavigationOption'
+import classes from './NavigationOptions.module.css'
 
 const navigationOptions = props => {
 	let navOpts = null
@@ -28,7 +29,7 @@ const navigationOptions = props => {
 			</>
 		)
 	}
-	return <ul>{navOpts}</ul>
+	return <ul className={classes.NavigationOptions}>{navOpts}</ul>
 }
 
 export default navigationOptions

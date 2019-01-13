@@ -7,6 +7,6 @@ export default props => {
 
 	if (!isLoggedIn) {
 		console.log('not logged in')
-		return <div>{props.children}</div>
+		return <div className={props.className}>{props.children}</div>
 	} else return <Redirect to={props.elseRedirect} />
 }

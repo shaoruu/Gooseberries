@@ -1,0 +1,14 @@
+.Post {
+	position: relative;
+	border: 1px solid #949494;
+	margin: 2em;
+	padding: 3em;
+}
+
+.tag {
+	top: 0;
+}
+
+.Post h1 {
+	font-size: 2rem;
+}

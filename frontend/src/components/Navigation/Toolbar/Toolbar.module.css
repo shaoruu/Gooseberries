@@ -1,0 +1,29 @@
+.ToolBar {
+	width: 100%;
+	display: flex;
+	box-sizing: border-box;
+	position: sticky;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid #949494;
+	padding: 0.5rem 0;
+	margin: 0;
+	top: 0;
+	z-index: 1;
+	background: rgba(255, 255, 255, 0.8);
+	font-family: 'Aleo', serif;
+}
+
+header ul li {
+	display: inline-block;
+	padding: 0 1.4em 0 0;
+	font-size: 0.9em;
+}
+
+header ul li a {
+	text-decoration: none;
+}
+
+nav {
+	align-self: center;
+}

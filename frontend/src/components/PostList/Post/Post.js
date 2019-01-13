@@ -1,14 +1,15 @@
 import React from 'react'
+import classes from './Post.module.css'
 
 const post = props => {
 	return (
-		<li>
+		<li className={classes.Post}>
 			<h1>{props.title}</h1>
 			<p>{props.content}</p>
 			<small>
 				posted on {props.dateCreated} by {props.user.username}
 			</small>
-			<h4>{props.thread.name}</h4>
+			<h4 className={classes.tag}>{props.thread.name}</h4>
 		</li>
 	)
 }

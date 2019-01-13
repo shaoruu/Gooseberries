@@ -1,5 +1,6 @@
 import React from 'react'
 import Post from './Post/Post'
+import classes from './PostList.module.css'
 
 const postList = props => {
 	let posts = props.posts.map(
@@ -17,7 +18,7 @@ const postList = props => {
 		}
 	)
 
-	return <ul>{posts}</ul>
+	return <ul className={classes.PostList}>{posts}</ul>
 }
 
 export default postList
