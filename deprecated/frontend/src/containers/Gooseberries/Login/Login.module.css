@@ -1,8 +1,8 @@
 .Login {
 	/* top: 150px;
    position: relative; */
-	background-size: contain;
-	background-image: url(../../../assets/loginBackground.jpg);
+	/* background-size: contain; */
+	background: #a2d5f2;
 	height: 100vh;
 }
 
@@ -13,7 +13,7 @@
 	padding: 0;
 	text-align: center;
 	margin: auto;
-	color: rgb(221, 221, 221);
+	color: rgb(22, 22, 22);
 }
 
 .Form {
@@ -22,7 +22,7 @@
 	margin: auto;
 	margin-top: 5rem;
 	border-radius: 20px;
-	background: rgba(153, 153, 153, 0.8);
+	background: rgba(216, 233, 255, 0.63);
 	flex-direction: column;
 	align-items: center;
 	padding: 3rem 0;
@@ -49,12 +49,17 @@
 
 .Form input {
 	margin: 1rem auto;
+	margin-top: 1.5rem;
 	text-align: center;
 	border: none;
-	border-bottom: 1px rgba(255, 255, 255, 0.527) solid;
+	border-bottom: 1px rgba(56, 56, 56, 0.527) solid;
 	background: rgba(0, 0, 0, 0);
-	color: rgba(255, 255, 255, 0.678);
+	color: rgba(61, 61, 61, 0.678);
 	font-size: 2rem;
+}
+
+.Form input:focus {
+	border-bottom-width: 80%;
 }
 
 .Form button {

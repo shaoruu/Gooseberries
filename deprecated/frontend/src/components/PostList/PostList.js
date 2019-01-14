@@ -19,7 +19,7 @@ const postList = props => {
 		}
 	)
 	let classNames = [classes.PostList]
-	if (props.showMenu) classNames.push(classes.SideMenu)
+	if (props.showMenu) classNames.push(classes.ShowMenu)
 	return <ul className={classNames.join(' ')}>{posts}</ul>
 }
 

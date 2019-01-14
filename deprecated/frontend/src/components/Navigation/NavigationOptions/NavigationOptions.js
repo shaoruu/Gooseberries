@@ -1,6 +1,8 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import NavigationOption from './NavigationOption/NavigationOption'
+import Dropdown from '../DropdownMenu/DropdownMenu'
 import classes from './NavigationOptions.module.css'
 
 const navigationOptions = props => {
@@ -9,12 +11,19 @@ const navigationOptions = props => {
 		navOpts = (
 			<>
 				<NavigationOption link="/home" exact>
-					Home
+					<FontAwesomeIcon icon="home" />
 				</NavigationOption>
 				<NavigationOption link="/profile" exact>
-					Profile
+					<FontAwesomeIcon icon="user" />
+					<FontAwesomeIcon icon="cog" />
+
+					{/* <div class="menu">
+						Menu Item
+						
+					</div> */}
 				</NavigationOption>
-				<NavigationOption link="/logout">Log Out</NavigationOption>
+				<Dropdown />
+				{/* <NavigationOption link="/logout">Log Out</NavigationOption> */}
 			</>
 		)
 	} else {

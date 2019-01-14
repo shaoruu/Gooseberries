@@ -10,9 +10,15 @@
 	color: white;
 	border-radius: 5px;
 	border: 1px white solid;
+	transition: 0.5s;
 }
 
 .NavigationOption a:hover {
 	background: rgba(0, 0, 0, 0.034);
 	border-radius: 0.3em;
+}
+
+.NavigationOption a:active,
+.NavigationOption a.active {
+	background: #0d87ce;
 }

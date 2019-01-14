@@ -8,12 +8,14 @@ import classes from './Toolbar.module.css'
 class ToolBar extends Component {
 	render() {
 		return (
-			<header className={classes.ToolBar}>
-				<Logo />
-				<nav>
-					<NavigationOptions isLoggedIn={this.props.isLoggedIn} />
-				</nav>
-			</header>
+			<>
+				<header className={classes.ToolBar}>
+					<Logo />
+					<nav>
+						<NavigationOptions isLoggedIn={this.props.isLoggedIn} />
+					</nav>
+				</header>
+			</>
 		)
 	}
 }

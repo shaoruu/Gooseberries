@@ -1,12 +1,15 @@
 .PostList {
 	list-style: none;
 	/* display: flex; */
-	grid-column: 1 / 5;
+	grid-column: 1 / 8;
 	margin: 0;
 	padding: 0;
 	/* top: 150px;
    position: relative; */
 	font-family: 'Sarabun', sans-serif;
 	transition: 1s;
-	background: rgba(0, 0, 0);
+}
+
+.ShowMenu {
+	grid-column: 1 / 7;
 }

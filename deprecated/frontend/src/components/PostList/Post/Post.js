@@ -6,10 +6,12 @@ const post = props => {
 		<li className={classes.Post} onClick={e => props.click(e, props.key)}>
 			<h1>{props.title}</h1>
 			<p>{props.content}</p>
-			<small>
-				posted on {props.dateCreated} by {props.user.username}
-			</small>
-			<h4 className={classes.tag}>{props.thread.name}</h4>
+			<div className={classes.Stamps}>
+				<small>
+					posted on {props.dateCreated} by {props.user.username}
+				</small>
+				<h4 className={classes.tag}>{props.thread.name}</h4>
+			</div>
 		</li>
 	)
 }
