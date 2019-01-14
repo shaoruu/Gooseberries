@@ -16,6 +16,9 @@ class User(AbstractUser):
     # profile_image = models.ImageField(default="default.jpg")
     bio = models.TextField(max_length=500)
 
+    # email authentication confirmation
+    auth_confirmed = models.BooleanField(default=False)
+
     date_joined = models.DateTimeField(editable=False)
     last_login = models.DateTimeField()
     

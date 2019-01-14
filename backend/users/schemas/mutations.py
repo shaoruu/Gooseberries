@@ -1,5 +1,6 @@
 import graphene
 import copy
+import smtplib
 from graphql import GraphQLError
 from django.contrib.auth import authenticate, login, logout
 from backend.users.schemas.queries import UserNode
@@ -16,13 +17,14 @@ class Register(graphene.relay.ClientIDMutation):
     returns back a User node.
     """
     class Input:
-        username      = graphene.String(required=True, description="User's username")
-        email         = graphene.String(required=True, description="User's email")
-        password      = graphene.String(required=True, description="User's password")
-        date_of_birth = graphene.types.datetime.Date(required=True, description="User's date of birth")
-        first_name    = graphene.String(description="User's first name", default_value="")
-        last_name     = graphene.String(description="User's last name", default_value="")
-        is_staff      = graphene.Boolean(description="Whether the user is an admin or not", default_value=False)
+        username          = graphene.String(required=True, description="User's username")
+        email             = graphene.String(required=True, description="User's email")
+        password          = graphene.String(required=True, description="User's password")
+        date_of_birth     = graphene.types.datetime.Date(required=True, description="User's date of birth")
+        first_name        = graphene.String(description="User's first name", default_value="")
+        last_name         = graphene.String(description="User's last name", default_value="")
+        is_staff          = graphene.Boolean(description="Whether the user is an admin or not", default_value=False)
+        confirmation_link = graphene.String(required=True, description="Email confirmation link, passed from frontend")
 
     ' Fields '
     user = graphene.Field(UserNode)
@@ -51,10 +53,41 @@ class Register(graphene.relay.ClientIDMutation):
         if not validate_name(input.get('first_name')) or not validate_name(input.get('last_name')):
             raise GraphQLError('Invalid first/last name.')
 
+        confirmation_link = input.pop('confirmation_link')
+
         new_user = UserModel(**input)
         new_user.set_password(password)
         new_user.save()
+
+        # Email Authentication
+        try: 
+            server = smtplib.SMTP('smtp.gmail.com:587')
+            server.ehlo()
+            server.starttls()
+            server.login("EMAIL", "PASSWORD")
+            message = 'Subject: {}\n\n{}'.format(
+                'Email Confirmation',
+                'Please click the link below to confirm your email address:\n' + confirmation_link
+            )
+            server.sendmail("EMAIL", input.get('email'), message)
+            server.quit()
+        except:
+            print('Email failed to send.')
+
         return Register(user=new_user)
+
+
+class ConfirmEmail(graphene.Mutation):
+    """
+    This gets called after the mutation link is clicked.
+    No input nor fields required
+    """
+    def mutate(self, info):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError('Not logged in.')
+        user.auth_confirmed = True
+        user.save()
 
 
 class Login(graphene.relay.ClientIDMutation):
