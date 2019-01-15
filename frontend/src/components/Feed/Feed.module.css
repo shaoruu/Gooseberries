@@ -1,0 +1,7 @@
+.Feed_container {
+	grid-column: 4/12;
+}
+
+.Feed_container ul {
+	padding: 0;
+}

@@ -1,0 +1,18 @@
+.NavOpt_container {
+	list-style: none;
+	cursor: pointer;
+	padding: 0.7rem;
+	transition: 0.5s;
+}
+
+.NavOpt_container a {
+	text-decoration: none;
+	color: black;
+	padding: 0;
+	margin: 0;
+}
+
+/* .NavOptContainer:active,
+.NavOptContainer.active {
+	background: black;
+} */

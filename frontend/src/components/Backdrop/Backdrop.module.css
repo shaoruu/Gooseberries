@@ -1,0 +1,20 @@
+.Backdrop {
+	position: fixed;
+	visibility: hidden;
+	opacity: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.3);
+	z-index: 3;
+	transition: visibility 0s, opacity 0.3s;
+}
+
+.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.close {
+	visibility: hidden;
+	opacity: 0;
+}

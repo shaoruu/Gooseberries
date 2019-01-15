@@ -1,0 +1,11 @@
+.MainLayout {
+	transition: margin-left 0.5s;
+}
+
+.open {
+	margin-left: 10rem;
+}
+
+.close {
+	margin-left: 0;
+}

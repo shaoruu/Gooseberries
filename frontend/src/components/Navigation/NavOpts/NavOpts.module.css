@@ -1,0 +1,9 @@
+.NavOpts_container {
+	grid-column: 6/8;
+}
+.NavOpts_container ul {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: space-evenly;
+}

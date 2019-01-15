@@ -1,0 +1,39 @@
+.SideDrawer_container {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 4;
+	top: 0;
+	left: 0;
+	background-color: #393e46;
+	overflow: hidden;
+	transition: 0.5s;
+}
+
+.SideDrawer_container ul {
+	height: 100%;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	justify-content: center;
+}
+
+.SideDrawer_container li {
+	margin: 2rem auto;
+}
+
+.SideDrawer_container a {
+	text-decoration: none;
+	font-size: 1.5rem;
+	color: #00adb5;
+	transition: 0.3s;
+}
+
+.open {
+	width: 10rem;
+}
+
+.close {
+	width: 0;
+}

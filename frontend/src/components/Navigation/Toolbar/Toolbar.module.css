@@ -1,0 +1,23 @@
+.Toolbar_container {
+	height: 4em;
+	width: 100%;
+	top: 0;
+	position: sticky;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	align-items: center;
+	background: #222831;
+	/* color: #eeeeee; */
+}
+
+.Toolbar_options_container {
+	margin: 0;
+	padding: 0;
+}
+
+.Toolbar_side_nav_button {
+	/* grid-column: 1 / 2; */
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}

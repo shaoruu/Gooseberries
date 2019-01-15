@@ -1,0 +1,19 @@
+.Logo_container {
+	grid-column: 1 / 2;
+	color: #00adb5;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	/* align-items: center; */
+}
+.Logo_container h1 {
+	display: inline;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+.Logo_container img {
+	width: 2.5rem;
+	margin-right: 0.5rem;
+}
