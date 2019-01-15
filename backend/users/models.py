@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from PIL import Image
 from django.contrib.auth.models import (
     AbstractUser, BaseUserManager
 )
@@ -15,6 +16,8 @@ class User(AbstractUser):
     date_of_birth = models.DateField()
     # profile_image = models.ImageField(default="default.jpg")
     bio = models.TextField(max_length=500)
+
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     # email authentication confirmation
     auth_confirmed = models.BooleanField(default=False)
@@ -48,6 +51,13 @@ class User(AbstractUser):
         if not called_by_admin: 
             ''' User has modified his/her own profile '''
             self.last_login = timezone.now()
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
         return super(User, self).save(*args, **kwargs)
 
     # @property

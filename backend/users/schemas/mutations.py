@@ -8,6 +8,7 @@ from backend.users.models import User as UserModel
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.validators import ASCIIUsernameValidator
+from graphene_file_upload.scalars import Upload
 from backend.utils import clean_input, validate_name
 
 
@@ -141,10 +142,10 @@ class UpdateProfile(graphene.relay.ClientIDMutation):
     Update user's profile according to the provided optional arguments.
     """
     class Input:
-        username = graphene.String()
+        username = graphene.String(required=True)
         first_name = graphene.String()
         last_name  = graphene.String()
-        # profile_image
+        profile_image = Upload()
     
     ' Fields '
     user = graphene.Field(UserNode)
