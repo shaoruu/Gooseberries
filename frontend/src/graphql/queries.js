@@ -26,7 +26,7 @@ export const POSTS_QUERY = gql`
 
 export const ME_QUERY = gql`
 	query {
-		me {
+		me @client {
 			username
 			email
 			image
@@ -34,8 +34,8 @@ export const ME_QUERY = gql`
 			lastName
 			isStaff
 			dateJoined
-			image
 			bio
+			token
 		}
 	}
 `

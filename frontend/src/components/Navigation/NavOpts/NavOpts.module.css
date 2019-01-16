@@ -4,7 +4,7 @@
 	justify-content: flex-end;
 }
 
-.NavOpts_dropdown {
+.NavOpts_side_options {
 	grid-column: 7/8;
 	justify-self: center;
 }

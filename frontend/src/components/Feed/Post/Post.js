@@ -7,7 +7,7 @@ export default props => {
 	return (
 		<div className={classes.Post_container}>
 			<div className={classes.Post_header}>
-				<img src={profilePic} alt="Profile Picture" className={classes.Post_image} />
+				<img src={profilePic} alt="Profile" className={classes.Post_image} />
 				<h1>
 					<i className={classes.Post_tag}>
 						{props.user.username} > {props.thread.name}

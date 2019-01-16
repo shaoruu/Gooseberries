@@ -1,0 +1,9 @@
+.Error_container {
+	position: absolute;
+	width: 100%;
+}
+
+.Error_container h1 {
+	color: #e84545;
+	text-align: center;
+}

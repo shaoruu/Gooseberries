@@ -9,7 +9,6 @@ class RouteListener extends Component {
 	componentWillMount() {
 		this.unlisten = this.props.history.listen((location, action) => {
 			if (this.state.prevPath !== location.pathname) {
-				this.props.checkAuth()
 				this.setState({ prevPath: location.pathname })
 			}
 		})

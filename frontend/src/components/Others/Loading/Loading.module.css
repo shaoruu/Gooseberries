@@ -1,0 +1,8 @@
+.Loading_container {
+	position: absolute;
+	width: 100%;
+}
+
+.Loading_container h1 {
+	text-align: center;
+}

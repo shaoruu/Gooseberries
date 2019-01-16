@@ -9,7 +9,9 @@ import {
 	faUserCog,
 	faCogs,
 	faQuestionCircle,
-	faSignOutAlt
+	faSignOutAlt,
+	faSignInAlt,
+	faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 
 import Layout from './hoc/Layout/Layout'
@@ -17,8 +19,18 @@ import RouterListener from './hoc/RouteListener/RouteListener'
 import { AUTH_TOKEN } from './constants'
 import Home from './views/general/Home/Home'
 import Login from './views/authentication/Login/Login'
+import Logout from './views/authentication/Logout/Logout'
 
-library.add(faHome, faUser, faUserCog, faCogs, faQuestionCircle, faSignOutAlt)
+library.add(
+	faHome,
+	faUser,
+	faUserCog,
+	faCogs,
+	faQuestionCircle,
+	faSignInAlt,
+	faSignOutAlt,
+	faUserPlus
+)
 
 class Gooseberries extends Component {
 	state = {
@@ -37,6 +49,7 @@ class Gooseberries extends Component {
 					<Switch>
 						<Route path="/home" component={Home} />
 						<Route path="/login" component={Login} />
+						<Route path="/logout" component={Logout} />
 						{/* <Route to="/profile/:username" component={Profile} /> */}
 					</Switch>
 				</RouterListener>

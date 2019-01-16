@@ -1,3 +1,73 @@
 .LoginForm_container {
-	/* grid-column: ; */
+	grid-column: 5/11;
+	padding: 3rem;
+	color: #222831;
+	width: 20rem;
+	justify-self: center;
+	box-shadow: 8px 8px 6px -6px #d3d4d8;
+	background: #f5f5f5;
+	margin-top: 5rem;
+}
+
+.LoginForm_title {
+	text-align: center;
+	font-size: 4rem;
+	margin: 2rem;
+	color: #393e46;
+}
+
+.LoginForm_inputfield {
+	display: flex;
+	flex-direction: column;
+	margin: 2rem auto;
+}
+
+.LoginForm_inputfield p {
+	margin: 0;
+	color: #e84545;
+}
+
+.LoginForm_inputfield span {
+	margin-bottom: 0.3rem;
+	font-size: 1.3rem;
+	color: #00adb5;
+}
+
+.LoginForm_inputfield input {
+	border: 3px solid #eeeeee;
+	padding: 0.3rem 0.5rem;
+	box-sizing: border-box;
+	transition: border 0.5s;
+}
+
+.LoginForm_inputfield input:focus {
+	outline: none;
+	border: 3px solid #00adb5;
+}
+
+.LoginForm_submit_btn {
+	border: none;
+	width: 5rem;
+	/* transition: 0.2s; */
+	border-radius: 2px;
+}
+
+.LoginForm_submit_btn:focus {
+	outline: none;
+}
+
+.LoginForm_submit_btn:active {
+	background: #3fbac2;
+}
+
+.LoginForm_submission_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 0 0.3rem;
+}
+
+.LoginForm_submission_container a {
+	text-decoration: underline;
+	color: #6a2c70;
 }

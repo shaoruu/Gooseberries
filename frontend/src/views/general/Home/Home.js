@@ -13,7 +13,7 @@ export default class Home extends Component {
 					{({ loading, error, data }) => {
 						if (loading) return <h1>LOADING...</h1>
 						if (error) return <h1>AN ERROR OCCURRED!</h1>
-						console.log(data)
+						// console.log(data)
 						return <Feed posts={data.posts.edges} />
 					}}
 				</Query>

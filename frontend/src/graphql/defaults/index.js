@@ -1,5 +1,5 @@
 export default {
-	userInfo: {
+	me: {
 		__typename: 'UserInfo',
 		username: null,
 		email: null,
@@ -8,7 +8,8 @@ export default {
 		firstName: null,
 		lastName: null,
 		isStaff: null,
-		dateJoined: null
+		dateJoined: null,
+		token: null
 	},
 	localPosts: []
 	// posts: [],

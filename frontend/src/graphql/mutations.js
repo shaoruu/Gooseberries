@@ -17,7 +17,6 @@ export const LOGIN_MUTATION = gql`
 				lastName
 				isStaff
 				dateJoined
-				image
 				bio
 				token
 			}
