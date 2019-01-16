@@ -4,6 +4,7 @@
 	margin: auto;
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 	/* align-items: center; */
 }
 .Logo_container h1 {

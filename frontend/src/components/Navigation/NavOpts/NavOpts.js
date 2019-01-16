@@ -12,34 +12,49 @@ export default props => {
 	console.log(props)
 
 	return (
-		<nav className={classes.NavOpts_container}>
-			<ul>
+		<>
+			<nav className={classes.NavOpts_main}>
 				<NavOpt link="/home">
 					<FontAwesomeIcon icon="home" style={{ color: '#eeeeee' }} size="2x" />
 				</NavOpt>
-				<NavOpt link={'/profile/'}>
-					<FontAwesomeIcon icon="user" style={{ color: '#eeeeee' }} size="2x" />
-				</NavOpt>
-				<div className={classes.NavOpts_dropdown}>
-					<div onClick={props.toggleDropdown}>
-						<NavOpt link="/home">
-							<FontAwesomeIcon icon="cog" style={{ color: '#eeeeee' }} size="2x" />
-						</NavOpt>
-					</div>
-
+			</nav>
+			<div className={classes.NavOpts_dropdown}>
+				<div onClick={props.toggleDropdown}>
+					<NavOpt link="/home">
+						<FontAwesomeIcon
+							icon="user-cog"
+							style={{ color: '#eeeeee' }}
+							size="2x"
+						/>
+					</NavOpt>
 					<div className={dropdownStyles.join(' ')}>
 						<NavLink to="/settings">
+							<FontAwesomeIcon
+								icon="cogs"
+								style={{ color: '#eeeeee' }}
+								size="2x"
+							/>
 							<h1>Settings</h1>
 						</NavLink>
 						<NavLink to="/help">
+							<FontAwesomeIcon
+								icon="question-circle"
+								style={{ color: '#eeeeee' }}
+								size="2x"
+							/>
 							<h1>Help Center</h1>
 						</NavLink>
 						<NavLink to="/logout">
+							<FontAwesomeIcon
+								icon="sign-out-alt"
+								style={{ color: '#eeeeee' }}
+								size="2x"
+							/>
 							<h1>Logout</h1>
 						</NavLink>
 					</div>
 				</div>
-			</ul>
-		</nav>
+			</div>
+		</>
 	)
 }

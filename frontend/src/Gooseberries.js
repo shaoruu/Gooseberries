@@ -3,15 +3,21 @@ import { Route, Switch } from 'react-router-dom'
 
 // FontsAwesome imports
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faUser, faCog } from '@fortawesome/free-solid-svg-icons'
+import {
+	faHome,
+	faUser,
+	faUserCog,
+	faCogs,
+	faQuestionCircle,
+	faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons'
 
 import Layout from './hoc/Layout/Layout'
 import RouterListener from './hoc/RouteListener/RouteListener'
-import Toolbar from './components/Navigation/Toolbar/Toolbar'
 import { AUTH_TOKEN } from './constants'
 import Home from './views/general/Home/Home'
 
-library.add(faHome, faUser, faCog)
+library.add(faHome, faUser, faUserCog, faCogs, faQuestionCircle, faSignOutAlt)
 
 class Gooseberries extends Component {
 	state = {

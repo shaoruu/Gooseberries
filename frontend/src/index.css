@@ -6,7 +6,8 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	background: #eeeeee;
-	font-family: century-old-style-std, serif;
+	/* font-family: century-old-style-std, serif; */
+	font-family: 'Lato', sans-serif;
 	font-style: normal;
 	height: 100%;
 }
