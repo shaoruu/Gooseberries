@@ -14,11 +14,13 @@ import './index.css'
 import Gooseberries from './Gooseberries'
 import * as serviceWorker from './serviceWorker'
 import { AUTH_TOKEN } from './constants'
-import defaults from './defaults'
+import defaults from './graphql/defaults'
+import resolvers from './graphql/resolvers'
 
 const cache = new InMemoryCache()
 
 const stateLink = withClientState({
+	resolvers,
 	cache,
 	defaults
 })

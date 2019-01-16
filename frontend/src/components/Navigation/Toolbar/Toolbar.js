@@ -11,10 +11,6 @@ export default props => (
 			<DrawerToggleButton click={props.drawerToggleClicked} />
 			<Logo />
 		</div>
-		<NavOpts
-			showDropdown={props.showDropdown}
-			toggleDropdown={props.toggleDropdown}
-			showDropdown={props.showDropdown}
-		/>
+		<NavOpts showDropdown={props.showDropdown} toggleDropdown={props.toggleDropdown} />
 	</div>
 )

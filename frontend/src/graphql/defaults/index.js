@@ -1,6 +1,6 @@
 export default {
-	me: {
-		__typename: 'Gooseberries',
+	userInfo: {
+		__typename: 'UserInfo',
 		username: null,
 		email: null,
 		image: null,
@@ -9,5 +9,8 @@ export default {
 		lastName: null,
 		isStaff: null,
 		dateJoined: null
-	}
+	},
+	localPosts: []
+	// posts: [],
+	// threads: []
 }

@@ -16,6 +16,7 @@ import Layout from './hoc/Layout/Layout'
 import RouterListener from './hoc/RouteListener/RouteListener'
 import { AUTH_TOKEN } from './constants'
 import Home from './views/general/Home/Home'
+import Login from './views/authentication/Login/Login'
 
 library.add(faHome, faUser, faUserCog, faCogs, faQuestionCircle, faSignOutAlt)
 
@@ -34,7 +35,8 @@ class Gooseberries extends Component {
 			<Layout>
 				<RouterListener checkAuth={this.handleAuth}>
 					<Switch>
-						<Route to="/home" component={Home} />
+						<Route path="/home" component={Home} />
+						<Route path="/login" component={Login} />
 						{/* <Route to="/profile/:username" component={Profile} /> */}
 					</Switch>
 				</RouterListener>
