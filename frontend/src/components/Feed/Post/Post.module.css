@@ -4,4 +4,37 @@
 	margin: auto;
 	margin-bottom: 2rem;
 	width: 35rem;
+	overflow: hidden;
+}
+
+.Post_body {
+	position: relative;
+	max-height: 15em;
+	overflow: hidden;
+	margin-bottom: 2rem;
+	white-space: pre-wrap;
+}
+
+.shadow {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 3em;
+	background: -webkit-linear-gradient(transparent, #eeeeee);
+	background: -o-linear-gradient(transparent, #eeeeee);
+	background: -moz-linear-gradient(transparent, #eeeeee);
+	background: linear-gradient(transparent, #eeeeee);
+}
+
+.Post_header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.Post_image {
+	width: 3rem;
+	height: 3rem;
+	padding: 0 2rem;
+	border-radius: 50%;
 }

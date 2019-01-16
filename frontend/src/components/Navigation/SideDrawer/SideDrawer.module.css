@@ -16,18 +16,36 @@
 	display: flex;
 	flex-direction: column;
 	list-style: none;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .SideDrawer_container li {
-	margin: 2rem auto;
 }
 
 .SideDrawer_container a {
 	text-decoration: none;
 	font-size: 1.5rem;
-	color: #00adb5;
 	transition: 0.3s;
+}
+
+.Drawer_btn {
+	background: #222831;
+	color: #eeeeee;
+	font-family: inherit;
+	text-align: left;
+	padding: 0.5rem 0;
+	width: 100%;
+	font-size: 1.5rem;
+	cursor: pointer;
+	text-decoration: none;
+	outline: none;
+	width: 100%;
+	border: none;
+	border-top: 1px solid black;
+}
+
+.Drawer_btn:last-of-type {
+	border-bottom: 1px solid black;
 }
 
 .open {

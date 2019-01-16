@@ -7,12 +7,20 @@ import Backdrop from '../../components/Backdrop/Backdrop'
 
 class Layout extends Component {
 	state = {
-		showDrawer: false
+		showDrawer: false,
+		showDropdown: false
 	}
 
 	sideDrawerToggleHandler = () => {
 		this.setState(prevState => {
 			prevState.showDrawer = !prevState.showDrawer
+			return prevState
+		})
+	}
+
+	navBarToggleHandler = () => {
+		this.setState(prevState => {
+			prevState.showDropdown = !prevState.showDropdown
 			return prevState
 		})
 	}
@@ -28,7 +36,11 @@ class Layout extends Component {
 					onClick={this.sideDrawerToggleHandler}
 				/>
 				<div className={layoutStyles.join(' ')}>
-					<Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
+					<Toolbar
+						drawerToggleClicked={this.sideDrawerToggleHandler}
+						toggleDropdown={this.navBarToggleHandler}
+						showDropdown={this.state.showDropdown}
+					/>
 					<main className={classes.Content}>{this.props.children}</main>
 				</div>
 			</>

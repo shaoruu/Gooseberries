@@ -2,6 +2,7 @@ import graphene
 import django_filters
 from graphene_django import DjangoObjectType
 from graphql_jwt.utils import jwt_encode, jwt_payload
+from graphene_file_upload.scalars import Upload
 from backend.users.models import User
 
 
@@ -27,5 +28,8 @@ class UserNode(DjangoObjectType):
 
         payload = jwt_payload(self)
         return jwt_encode(payload)
+    
+    def resolve_image(self, info):
+        return self.get_image_base64()
 
 
