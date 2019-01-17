@@ -1,15 +1,49 @@
 import React from 'react'
-import { Mutation, Query } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 import { Redirect, NavLink } from 'react-router-dom'
 import { Formik } from 'formik'
+import {
+	Grid,
+	TextField,
+	FormControl,
+	FormHelperText,
+	Button,
+	withStyles
+} from '@material-ui/core'
 
 import classes from './LoginForm.module.css'
 import Loading from '../../Others/Loading/Loading'
-import Error from '../../Others/Error/Error'
 import { ME_QUERY } from '../../../graphql/queries'
 import { LOGIN_MUTATION, LOGIN_SCHEMA } from '../../../graphql/mutations'
 
-export default props => {
+const styles = theme => ({
+	loginButton: {
+		color: theme.palette.getContrastText('#009f9d'),
+		backgroundColor: '#009f9d',
+		'&:hover': {
+			backgroundColor: '#3fbac2'
+		},
+		'&:active': {
+			backgroundColor: '#3fbac2'
+		}
+	},
+	cssFocused: {},
+	cssOutlinedInput: {
+		'&$cssFocused $notchedOutline': {
+			borderColor: '#00adb5'
+		}
+	},
+	cssLabel: {
+		'&$cssFocused': {
+			color: '#00adb5'
+		}
+	},
+	notchedOutline: {}
+})
+
+const loginForm = props => {
+	const styles = props.classes
+
 	return (
 		<div className={classes.LoginForm_container}>
 			<Mutation
@@ -27,7 +61,6 @@ export default props => {
 			>
 				{(loginUser, { loading, error, data }) => {
 					if (loading) return <Loading />
-					if (error) return <Error message={'error'} />
 
 					if (data) {
 						props.confirmAndHandle(data)
@@ -35,82 +68,156 @@ export default props => {
 					}
 
 					return (
-						<div>
-							<Formik
-								initialValues={{ username: '', password: '' }}
-								validationSchema={LOGIN_SCHEMA}
-								onSubmit={(values, { resetForm, setErrors }) => {
-									loginUser({
-										variables: {
-											username: values.username,
-											password: values.password
-										}
-									})
-								}}
-								render={({
-									values,
-									errors,
-									touched,
-									handleChange,
-									handleBlur,
-									handleSubmit
-								}) => {
-									return (
-										<form onSubmit={handleSubmit} className={classes.Form}>
-											<div className={classes.LoginForm_title}>LOG IN</div>
-											<div className={classes.LoginForm_inputfield}>
-												<span className={classes.label}>Username</span>
-												<input
-													type="Text"
-													id="username"
-													name="username"
-													placeholder="username..."
-													onChange={handleChange}
-													// TODO Implement onBlur
-													onBlur={handleBlur}
-													value={values.username}
-												/>
-												{touched.username && errors && errors.username && (
-													<p>{errors.username}</p>
-												)}
-											</div>
+						<Formik
+							initialValues={{ username: '', password: '' }}
+							validationSchema={LOGIN_SCHEMA}
+							onSubmit={(values, { setSubmitting }) => {
+								loginUser({
+									variables: {
+										username: values.username,
+										password: values.password
+									}
+								})
+								setSubmitting(false)
+							}}
+							render={({
+								values,
+								errors,
+								touched,
+								handleChange,
+								handleBlur,
+								handleSubmit,
+								isSubmitting
+							}) => {
+								return (
+									<form onSubmit={handleSubmit} className={classes.Form}>
+										<div className={classes.LoginForm_title}>
+											Log In to Your Account
+										</div>
+										<div className={classes.LoginForm_inputfield_container}>
+											<Grid
+												container
+												spacing={16}
+												alignItems="center"
+												justify="center"
+											>
+												<Grid item xs="auto">
+													<FormControl aria-describedby="error-text">
+														<TextField
+															required
+															id="username"
+															name="username"
+															value={values.username}
+															label="Username"
+															onChange={handleChange}
+															onBlur={handleBlur}
+															InputLabelProps={{
+																classes: {
+																	root: styles.cssLabel,
+																	focused: styles.cssFocused
+																}
+															}}
+															InputProps={{
+																classes: {
+																	root: styles.cssOutlinedInput,
+																	focused: styles.cssFocused,
+																	notchedOutline: styles.notchedOutline
+																}
+															}}
+															className={classes.LoginForm_textfield}
+															variant="outlined"
+														/>
+														{(touched.username &&
+															errors &&
+															errors.username && (
+																<FormHelperText id="error-text" error>
+																	{errors.username}
+																</FormHelperText>
+															)) ||
+															(error &&
+																error.message.includes('credentials') && (
+																	<FormHelperText id="error-text" error>
+																		Invalid username or password.
+																	</FormHelperText>
+																))}
+													</FormControl>
+												</Grid>
+												<Grid item xs="auto">
+													<FormControl aria-describedby="error-text">
+														<TextField
+															required
+															id="password"
+															name="password"
+															value={values.password}
+															type="password"
+															autoComplete="current-password"
+															label="Password"
+															onChange={handleChange}
+															onBlur={handleBlur}
+															InputLabelProps={{
+																classes: {
+																	root: styles.cssLabel,
+																	focused: styles.cssFocused
+																}
+															}}
+															InputProps={{
+																classes: {
+																	root: styles.cssOutlinedInput,
+																	focused: styles.cssFocused,
+																	notchedOutline: styles.notchedOutline
+																}
+															}}
+															className={classes.LoginForm_textfield}
+															variant="outlined"
+														/>
+														{touched.password && errors && errors.password && (
+															<FormHelperText id="error-text" error>
+																{errors.password}
+															</FormHelperText>
+														)}
+													</FormControl>
+												</Grid>
+											</Grid>
+										</div>
 
-											<div className={classes.LoginForm_inputfield}>
-												<span className={classes.label}>Password</span>
-												<input
-													type="Password"
-													id="password"
-													name="password"
-													placeholder="password..."
-													onChange={handleChange}
-													// TODO Implement onBlur
-													onBlur={handleBlur}
-													value={values.password}
-												/>
-												{touched.password && errors && errors.password && (
-													<p>{errors.password}</p>
-												)}
-											</div>
-
-											<div className={classes.LoginForm_submission_container}>
-												<NavLink to="/register">
-													<small>Don't have an account?</small>
-												</NavLink>
-												<button
-													type="Submit"
-													className={classes.LoginForm_submit_btn}
+										<Grid
+											container
+											spacing={16}
+											alignItems="center"
+											justify="center"
+										>
+											<Grid item xs={5}>
+												<div className={classes.register}>
+													<NavLink to="/register">
+														<small>Don't have an account?</small>
+													</NavLink>
+												</div>
+											</Grid>
+											<Grid item xs={2}>
+												<Button
+													type="submit"
+													variant="contained"
+													color="primary"
+													className={styles.loginButton}
+													disabled={
+														isSubmitting ||
+														!!(errors.username && touched.username) ||
+														!!(errors.password && touched.password)
+													}
 												>
 													Login
-												</button>
-											</div>
-										</form>
-									)
-								}}
-							/>
-						</div>
+												</Button>
+											</Grid>
+										</Grid>
+									</form>
+								)
+							}}
+						/>
 					)
 				}}
 			</Mutation>
 		</div>
 	)
 }
+
+export default withStyles(styles)(loginForm)

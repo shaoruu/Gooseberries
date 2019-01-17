@@ -3,45 +3,7 @@
 	display: flex;
 	justify-content: flex-end;
 }
-
 .NavOpts_side_options {
 	grid-column: 7/8;
 	justify-self: center;
-}
-
-.NavOpts_dropdown_menu {
-	display: flex;
-	justify-self: center;
-	flex-direction: column;
-	grid-column: 7/8;
-	/* box-sizing: border-box; */
-	text-align: right;
-	/* right: 0.1px; */
-	top: 4rem;
-	width: 9em;
-	position: absolute;
-	padding: 1rem;
-	z-index: 2;
-	background: #222831;
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-top: 0.4px solid #eeeeee;
-}
-
-.NavOpts_dropdown_menu a {
-	padding: 0.5rem;
-	color: #eeeeee;
-	text-decoration: none;
-	font-size: 0.5rem;
-	text-align: left;
-}
-
-.NavOpts_dropdown_menu h1 {
-	display: inline;
-	margin-left: 1rem;
-}
-
-.dropdown_close {
-	/* move dropdown menu way up to create animation */
-	display: none;
 }

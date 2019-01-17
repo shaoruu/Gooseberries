@@ -1,10 +1,10 @@
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 
-const postQuery = gql`
-	query {
-		localPosts @client
-	}
-`
+// const postQuery = gql`
+// 	query {
+// 		localPosts @client
+// 	}
+// `
 
 export default {
 	Query: {},
