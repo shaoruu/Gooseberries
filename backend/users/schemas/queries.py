@@ -30,6 +30,6 @@ class UserNode(DjangoObjectType):
         return jwt_encode(payload)
     
     def resolve_image(self, info):
-        return self.get_image_base64()
+        return 'data:image/png;base64,' + self.get_image_base64()
 
 

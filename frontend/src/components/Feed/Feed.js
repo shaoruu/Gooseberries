@@ -21,7 +21,11 @@ export default props => {
 	)
 	return (
 		<div className={classes.Feed_container}>
-			<ul>{posts}</ul>
+			{props.posts.length === 0 ? (
+				<h1 style={{ textAlign: 'center' }}>NO POSTS</h1>
+			) : (
+				<ul>{posts}</ul>
+			)}
 		</div>
 	)
 }

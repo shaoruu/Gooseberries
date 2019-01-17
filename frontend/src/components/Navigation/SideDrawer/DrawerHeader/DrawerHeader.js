@@ -1,5 +1,7 @@
 import React from 'react'
+import { ApolloConsumer } from 'react-apollo'
 
+import { ME_QUERY } from '../../../../graphql/queries'
 import classes from './DrawerHeader.module.css'
 
 export default props => (

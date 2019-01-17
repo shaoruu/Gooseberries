@@ -1,0 +1,27 @@
+.RegisterForm_container {
+	grid-column: 5/11;
+	padding: 3rem;
+	color: #222831;
+	width: 25rem;
+	justify-self: center;
+	box-shadow: 8px 8px 6px -6px #d3d4d8;
+	background: #f5f5f5;
+	margin-top: 5rem;
+	border-radius: 3px;
+}
+
+.RegisterForm_title {
+	text-align: center;
+	font-size: 2rem;
+	margin: 2rem;
+	color: #393e46;
+}
+
+.register a {
+	text-decoration: none;
+	color: #6a2c70;
+}
+
+.register a:active {
+	color: #e84545;
+}

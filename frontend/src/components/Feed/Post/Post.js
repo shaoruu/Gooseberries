@@ -2,12 +2,10 @@ import React from 'react'
 import classes from './Post.module.css'
 
 export default props => {
-	let profilePic = 'data:image/png;base64,' + props.user.image
-
 	return (
 		<div className={classes.Post_container}>
 			<div className={classes.Post_header}>
-				<img src={profilePic} alt="Profile" className={classes.Post_image} />
+				<img src={props.user.image} alt="Profile" className={classes.Post_image} />
 				<h1>
 					<i className={classes.Post_tag}>
 						{props.user.username} > {props.thread.name}

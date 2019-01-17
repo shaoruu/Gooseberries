@@ -31,9 +31,12 @@ export const REGISTER_SCHEMA = Yup.object().shape({
 	password: Yup.string()
 		.min(8, 'Password must be at least 8 characters.')
 		.required('Password is required.'),
-	firstName: Yup.string().required('First name is required.'),
-	lastName: Yup.string().required('Last name is required'),
-	email: Yup.string().required('Email is required.'),
+	passwordConfirm: Yup.string()
+		.oneOf([Yup.ref('password'), null], 'Password does not match.')
+		.required('Password confirm is required'),
+	email: Yup.string()
+		.email('Please enter an valid email.')
+		.required('Email is required.'),
 	dateOfBirth: Yup.date().required('Date of birth is required.')
 })
 
@@ -41,20 +44,22 @@ export const REGISTER_MUTATION = gql`
 	mutation Register(
 		$username: String!
 		$password: String!
-		$firstName: String!
-		$lastName: String!
 		$email: String!
-		$dateOfBirth: String!
+		$dateOfBirth: Date!
+		$confirmationLink: String!
 	) {
 		register(
 			input: {
 				username: $username
 				password: $password
-				firstName: $firstName
-				lastName: $lastName
 				email: $email
 				dateOfBirth: $dateOfBirth
+				confirmationLink: $confirmationLink
 			}
-		)
+		) {
+			user {
+				username
+			}
+		}
 	}
 `

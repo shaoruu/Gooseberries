@@ -64,21 +64,6 @@ class Register(graphene.relay.ClientIDMutation):
         new_user.save()
 
         # Email Authentication
-<<<<<<< HEAD
-        try: 
-            server = smtplib.SMTP('smtp.gmail.com:587')
-            server.ehlo()
-            server.starttls()
-            server.login("EMAIL", "PASSWORD")
-            message = 'Subject: {}\n\n{}'.format(
-                'Email Confirmation',
-                'Please click the link below to confirm your email address:\n' + confirmation_link
-            )
-            server.sendmail("EMAIL", input.get('email'), message)
-            server.quit()
-        except:
-            print('Email failed to send.')
-=======
         # try: 
         #     server = smtplib.SMTP('smtp.gmail.com:587')
         #     server.ehlo()
@@ -92,7 +77,6 @@ class Register(graphene.relay.ClientIDMutation):
         #     server.quit()
         # except:
         #     print('Email failed to send.')
->>>>>>> e2e1bdd... refreshed database
 
         return Register(user=new_user)
 

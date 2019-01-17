@@ -20,6 +20,7 @@ import { AUTH_TOKEN } from './constants'
 import Home from './views/general/Home/Home'
 import Login from './views/authentication/Login/Login'
 import Logout from './views/authentication/Logout/Logout'
+import Register from './views/authentication/Register/Register'
 
 library.add(
 	faHome,
@@ -50,6 +51,7 @@ class Gooseberries extends Component {
 						<Route path="/home" component={Home} />
 						<Route path="/login" component={Login} />
 						<Route path="/logout" component={Logout} />
+						<Route path="/register" component={Register} />
 						{/* <Route to="/profile/:username" component={Profile} /> */}
 					</Switch>
 				</RouterListener>
