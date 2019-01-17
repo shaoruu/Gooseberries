@@ -1,6 +1,6 @@
 import graphene
 import copy
-import smtplib
+# import smtplib
 from graphql import GraphQLError
 from django.contrib.auth import authenticate, login, logout
 from backend.users.schemas.queries import UserNode
@@ -56,11 +56,15 @@ class Register(graphene.relay.ClientIDMutation):
 
         confirmation_link = input.pop('confirmation_link')
 
+        "Convert username to lowercase"
+        input['username'] = input.get('username').lower()
+
         new_user = UserModel(**input)
         new_user.set_password(password)
         new_user.save()
 
         # Email Authentication
+<<<<<<< HEAD
         try: 
             server = smtplib.SMTP('smtp.gmail.com:587')
             server.ehlo()
@@ -74,6 +78,21 @@ class Register(graphene.relay.ClientIDMutation):
             server.quit()
         except:
             print('Email failed to send.')
+=======
+        # try: 
+        #     server = smtplib.SMTP('smtp.gmail.com:587')
+        #     server.ehlo()
+        #     server.starttls()
+        #     server.login("EMAIL", "PASSWORD")
+        #     message = 'Subject: {}\n\n{}'.format(
+        #         'Email Confirmation',
+        #         'Please click the link below to confirm your email address:\n' + confirmation_link
+        #     )
+        #     server.sendmail("EMAIL", input.get('email'), message)
+        #     server.quit()
+        # except:
+        #     print('Email failed to send.')
+>>>>>>> e2e1bdd... refreshed database
 
         return Register(user=new_user)
 
