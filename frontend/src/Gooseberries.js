@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 // FontsAwesome imports
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -52,6 +52,7 @@ class Gooseberries extends Component {
 						<Route path="/login" component={Login} />
 						<Route path="/logout" component={Logout} />
 						<Route path="/register" component={Register} />
+						<Route path="/" render={() => <Redirect push to="/home" />} />
 						{/* <Route to="/profile/:username" component={Profile} /> */}
 					</Switch>
 				</RouterListener>

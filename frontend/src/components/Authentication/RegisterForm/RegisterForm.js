@@ -48,7 +48,7 @@ const registerForm = props => {
 			<Mutation mutation={REGISTER_MUTATION}>
 				{(registerUser, { loading, error, data }) => {
 					if (loading) return <Loading />
-					if (data) return <Redirect to="/login" />
+					if (data) return <Redirect push to="/login" />
 					if (error) console.log(error.message)
 
 					return (
@@ -69,7 +69,7 @@ const registerForm = props => {
 								registerUser({
 									variables: { ...values, confirmationLink: temp }
 								})
-								console.log(values)
+								// console.log(values)
 								setSubmitting(false)
 							}}
 							render={({
@@ -82,7 +82,12 @@ const registerForm = props => {
 								isSubmitting
 							}) => {
 								return (
-									<form onSubmit={handleSubmit}>
+									<form
+										onSubmit={e => {
+											e.preventDefault()
+											handleSubmit(e)
+										}}
+									>
 										<div className={classes.RegisterForm_title}>
 											Register an Account
 										</div>

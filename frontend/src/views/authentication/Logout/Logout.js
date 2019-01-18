@@ -1,15 +1,16 @@
 import React from 'react'
 import { ApolloConsumer } from 'react-apollo'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import { AUTH_TOKEN } from '../../../constants'
 
-export default () => (
+export default withRouter(({ history }) => (
 	<ApolloConsumer>
 		{client => {
 			client.resetStore()
 			localStorage.setItem(AUTH_TOKEN, '')
-			return <Redirect to="/login" />
+			history.push('/home')
+			return null
 		}}
 	</ApolloConsumer>
-)
+))

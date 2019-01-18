@@ -11,6 +11,7 @@ export default class Home extends Component {
 			<div className={classes.Home_container}>
 				<Query query={POSTS_QUERY}>
 					{({ loading, data }) => {
+						if (!data) return null
 						return !loading ? <Feed posts={data.posts.edges} /> : null
 					}}
 				</Query>

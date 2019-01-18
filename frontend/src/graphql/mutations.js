@@ -37,7 +37,10 @@ export const REGISTER_SCHEMA = Yup.object().shape({
 	email: Yup.string()
 		.email('Please enter an valid email.')
 		.required('Email is required.'),
-	dateOfBirth: Yup.date().required('Date of birth is required.')
+	dateOfBirth: Yup.date()
+		.min('1900-01-01', 'Invalid date.')
+		.max(new Date(), 'Invalid date.')
+		.required('Date of birth is required.')
 })
 
 export const REGISTER_MUTATION = gql`

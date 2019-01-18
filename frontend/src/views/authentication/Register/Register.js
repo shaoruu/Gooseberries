@@ -9,7 +9,7 @@ export default class Login extends Component {
 	render() {
 		return (
 			<div className={classes.Register_container}>
-				{localStorage.getItem(AUTH_TOKEN) ? <Redirect to="/home" /> : null}
+				{localStorage.getItem(AUTH_TOKEN) ? <Redirect push to="/home" /> : null}
 				<RegisterForm />
 			</div>
 		)

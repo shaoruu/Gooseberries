@@ -64,7 +64,7 @@ const loginForm = props => {
 
 					if (data) {
 						props.confirmAndHandle(data)
-						return <Redirect to="/home" />
+						return <Redirect push to="/home" />
 					}
 
 					return (
