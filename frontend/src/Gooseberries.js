@@ -22,6 +22,7 @@ import Home from './views/general/Home/Home'
 import Login from './views/authentication/Login/Login'
 import Logout from './views/authentication/Logout/Logout'
 import Register from './views/authentication/Register/Register'
+import Profile from './views/specifics/Profile/Profile.js'
 
 library.add(
 	faHome,
@@ -54,6 +55,7 @@ class Gooseberries extends Component {
 						<Route path="/login" component={Login} />
 						<Route path="/logout" component={Logout} />
 						<Route path="/register" component={Register} />
+						<Route path="/profile/:username" component={Profile} />
 						<Route path="/" render={() => <Redirect push to="/home" />} />
 						{/* <Route to="/profile/:username" component={Profile} /> */}
 					</Switch>

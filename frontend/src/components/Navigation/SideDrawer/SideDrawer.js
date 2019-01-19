@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 
 import classes from './SideDrawer.module.css'
 import DrawerHeader from './DrawerHeader/DrawerHeader'

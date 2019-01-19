@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink } from 'react-router-dom'
+import { Query } from 'react-apollo'
 
 import classes from './Dropdown.module.css'
+import { ME_QUERY } from '../../../../graphql/queries'
 
 export default class Dropdown extends Component {
 	state = {
@@ -45,14 +47,21 @@ export default class Dropdown extends Component {
 						/>
 					</div>
 					<div className={dropdownStyles.join(' ')}>
-						<NavLink to="/profile">
-							<FontAwesomeIcon
-								icon="user-circle"
-								style={{ color: '#eeeeee' }}
-								size="2x"
-							/>
-							<h1>User Profile</h1>
-						</NavLink>
+						<Query query={ME_QUERY}>
+							{({ loading, data }) =>
+								!loading && (
+									<NavLink to={`/profile/${data.me.username}`}>
+										<FontAwesomeIcon
+											icon="user-circle"
+											style={{ color: '#eeeeee' }}
+											size="2x"
+										/>
+										<h1>User Profile</h1>
+									</NavLink>
+								)
+							}
+						</Query>
+
 						<hr className={classes.LineBreak} />
 						<NavLink to="/settings">
 							<FontAwesomeIcon icon="cog" style={{ color: '#eeeeee' }} size="2x" />

@@ -24,6 +24,43 @@ export const POSTS_QUERY = gql`
 	}
 `
 
+export const USER_QUERY = gql`
+	query UserQuery($username: String!) {
+		user(username: $username) {
+			isStaff
+			username
+			email
+			firstName
+			lastName
+			isStaff
+			isActive
+			bio
+			dateOfBirth
+			image
+			lastLogin
+			threadMemberships {
+				edges {
+					node {
+						thread {
+							name
+							description
+						}
+						isAdmin
+					}
+				}
+			}
+		}
+		posts {
+			edges {
+				node {
+					title
+					dateCreated
+				}
+			}
+		}
+	}
+`
+
 export const ME_QUERY = gql`
 	query {
 		me @client {

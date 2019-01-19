@@ -1,12 +1,14 @@
 .Logo_container {
 	grid-column: 1 / 2;
 	color: #00adb5;
-	margin: auto;
+	margin: 0;
+	margin-left: 0.4em;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 	/* align-items: center; */
 }
+
 .Logo_container h1 {
 	display: inline;
 	text-align: center;
