@@ -23,11 +23,13 @@ export default props => {
 		<>
 			<nav className={classes.NavOpts_main}>
 				<NavOpt link="/register">
+					<h1 className={classes.ICON_TITLE}>REGISTER</h1>
 					<FontAwesomeIcon icon="user-plus" style={{ color: '#eeeeee' }} size="2x" />
 				</NavOpt>
 			</nav>
 			<div className={classes.NavOpts_side_options}>
 				<NavOpt link="/login">
+					<h1 className={classes.ICON_TITLE}>LOGIN</h1>
 					<FontAwesomeIcon
 						icon="sign-in-alt"
 						style={{ color: '#eeeeee' }}

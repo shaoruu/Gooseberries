@@ -6,15 +6,13 @@
 	width: 100%;
 	background: rgba(0, 0, 0, 0.3);
 	z-index: 3;
-	transition: visibility 0s, opacity 0.3s;
+	transition: visibility 0s, opacity 0.2s;
+	-moz-transition: visibility 0s, opacity 0.2s;
+	-webkit-transition: visibility 0s, opacity 0.2s;
+	-o-transition: visibility 0s, opacity 0.2s;
 }
 
 .show {
 	visibility: visible;
 	opacity: 1;
-}
-
-.close {
-	visibility: hidden;
-	opacity: 0;
 }

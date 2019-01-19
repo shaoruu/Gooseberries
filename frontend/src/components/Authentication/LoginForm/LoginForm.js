@@ -74,7 +74,7 @@ const loginForm = props => {
 							onSubmit={(values, { setSubmitting }) => {
 								loginUser({
 									variables: {
-										username: values.username,
+										username: values.username.toLowerCase(),
 										password: values.password
 									}
 								})

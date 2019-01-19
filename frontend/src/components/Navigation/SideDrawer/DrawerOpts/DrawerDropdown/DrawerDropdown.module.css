@@ -1,0 +1,36 @@
+.DrawerDropdown_container {
+}
+
+.DrawerDropdown_menu {
+	/* transition: 0.5s; */
+	display: flex;
+	flex-direction: column;
+}
+
+.DrawerDropdown_opts_container {
+	transition: max-height 0.5s;
+}
+
+.DrawerDropdown_opts_container a {
+	text-decoration: none;
+	font-size: 1.5rem;
+}
+
+.DrawerDropdown_btn {
+	background: #222831;
+	color: #eeeeee;
+	font-family: inherit;
+	text-align: left;
+	padding: 0.5rem 0;
+	width: 100%;
+	font-size: 1.5rem;
+	cursor: pointer;
+	text-decoration: none;
+	outline: none;
+	border: none;
+	border-top: 1px solid black;
+}
+
+.last {
+	border-bottom: 1px solid black;
+}

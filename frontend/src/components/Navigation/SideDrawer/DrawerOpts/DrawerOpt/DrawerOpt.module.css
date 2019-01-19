@@ -1,0 +1,27 @@
+.DrawerOpt_btn {
+	background: #222831;
+	color: #eeeeee;
+	font-family: inherit;
+	text-align: left;
+	padding: 0.5rem 0;
+	width: 100%;
+	font-size: 1.5rem;
+	cursor: pointer;
+	text-decoration: none;
+	outline: none;
+	border: none;
+	border-top: 1px solid black;
+}
+
+.DrawerOpt_container {
+}
+
+.DrawerOpt_container a {
+	text-decoration: none;
+	font-size: 1.5rem;
+	transition: 0.3s;
+}
+
+.last {
+	border-bottom: 1px solid black;
+}

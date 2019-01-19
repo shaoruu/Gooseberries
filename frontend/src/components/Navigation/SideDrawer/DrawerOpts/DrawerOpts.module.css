@@ -1,0 +1,8 @@
+.DrawerOpts_container {
+	height: 100%;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	justify-content: flex-start;
+}

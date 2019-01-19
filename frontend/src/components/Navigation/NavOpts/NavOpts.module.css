@@ -1,9 +1,23 @@
 .NavOpts_main {
 	grid-column: 6/7;
-	display: flex;
-	justify-content: flex-end;
+	justify-self: flex-end;
 }
+
 .NavOpts_side_options {
 	grid-column: 7/8;
 	justify-self: center;
+}
+
+.ICON_TITLE {
+	display: inline;
+	font-size: 1.3rem;
+	margin: 0;
+	color: #eeeeee;
+	margin-right: 0.1rem;
+}
+
+@media only screen and (max-width: 600px) {
+	.ICON_TITLE {
+		display: none;
+	}
 }

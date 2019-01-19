@@ -7,11 +7,12 @@ import {
 	faHome,
 	faUser,
 	faUserCog,
-	faCogs,
+	faCog,
 	faQuestionCircle,
 	faSignOutAlt,
 	faSignInAlt,
-	faUserPlus
+	faUserPlus,
+	faUserCircle
 } from '@fortawesome/free-solid-svg-icons'
 
 import Layout from './hoc/Layout/Layout'
@@ -26,7 +27,8 @@ library.add(
 	faHome,
 	faUser,
 	faUserCog,
-	faCogs,
+	faUserCircle,
+	faCog,
 	faQuestionCircle,
 	faSignInAlt,
 	faSignOutAlt,

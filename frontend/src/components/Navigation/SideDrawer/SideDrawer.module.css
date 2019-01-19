@@ -1,13 +1,16 @@
 .SideDrawer_container {
 	height: 100%;
-	width: 0;
-	position: fixed;
+	width: 12rem;
+	position: absolute;
 	z-index: 4;
-	top: 0;
-	left: 0;
+	/* top: 0;
+	left: 0; */
 	background-color: #393e46;
-	overflow: hidden;
-	transition: 0.5s;
+	/* overflow: hidden; */
+	transition: 0.1s;
+	-moz-transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+	-o-transition: all 0.1s;
 }
 
 .SideDrawer_container ul {
@@ -25,7 +28,7 @@
 .SideDrawer_container a {
 	text-decoration: none;
 	font-size: 1.5rem;
-	transition: 0.3s;
+	/* transition: 0.3s; */
 }
 
 .Drawer_btn {
@@ -39,7 +42,6 @@
 	cursor: pointer;
 	text-decoration: none;
 	outline: none;
-	width: 100%;
 	border: none;
 	border-top: 1px solid black;
 }
@@ -48,10 +50,6 @@
 	border-bottom: 1px solid black;
 }
 
-.open {
-	width: 12rem;
-}
-
 .close {
-	width: 0;
+	transform: translateX(-12rem);
 }

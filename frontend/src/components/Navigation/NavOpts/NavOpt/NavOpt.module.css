@@ -6,6 +6,8 @@
 }
 
 .NavOpt_container a {
+	display: flex;
+	align-items: center;
 	text-decoration: none;
 	color: black;
 	padding: 0;

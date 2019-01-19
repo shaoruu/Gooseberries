@@ -1,13 +1,14 @@
 .Toolbar_container {
 	height: 4em;
-	width: 100%;
+	/* width: 100%; */
 	top: 0;
 	position: sticky;
 	display: grid;
+	width: 100%;
 	grid-template-columns: repeat(7, 1fr);
 	align-items: center;
 	background: #222831;
-	z-index: 5;
+	z-index: 2;
 	/* color: #eeeeee; */
 }
 

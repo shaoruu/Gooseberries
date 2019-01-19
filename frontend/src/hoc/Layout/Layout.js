@@ -27,7 +27,7 @@ class Layout extends Component {
 
 	render() {
 		let layoutStyles = [classes.MainLayout]
-		layoutStyles.push(this.state.showDrawer ? classes.open : classes.close)
+		if (this.state.showDrawer) layoutStyles.push(classes.open)
 		return (
 			<>
 				<SideDrawer show={this.state.showDrawer} />

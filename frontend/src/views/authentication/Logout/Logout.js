@@ -9,7 +9,7 @@ export default withRouter(({ history }) => (
 		{client => {
 			client.resetStore()
 			localStorage.setItem(AUTH_TOKEN, '')
-			history.push('/home')
+			history.push('/login')
 			return null
 		}}
 	</ApolloConsumer>

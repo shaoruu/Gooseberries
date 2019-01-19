@@ -1,11 +1,11 @@
 .MainLayout {
-	transition: margin-left 0.5s;
+	margin-left: 0;
+	transition: 0.1s;
+	-moz-transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+	-o-transition: all 0.1s;
 }
 
 .open {
 	margin-left: 12rem;
-}
-
-.close {
-	margin-left: 0;
 }
