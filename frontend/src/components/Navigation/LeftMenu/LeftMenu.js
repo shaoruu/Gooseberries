@@ -148,7 +148,7 @@ class LeftMenu extends Component {
 										<ListItem
 											button
 											className={classes.nested}
-											onClick={() => this.props.history.push('start-thread')}
+											onClick={() => this.props.history.push('/start-thread')}
 										>
 											<ListItemIcon>
 												<GroupAdd />

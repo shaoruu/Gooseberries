@@ -24,6 +24,8 @@ import Login from './views/authentication/Login/Login'
 import Logout from './views/authentication/Logout/Logout'
 import Register from './views/authentication/Register/Register'
 import Profile from './views/specifics/Profile/Profile.js'
+import CreatePost from './views/Create/CreatePost/CreatePost'
+import StartThread from './views/Create/StartThread/StartThread'
 
 library.add(
 	faHome,
@@ -58,6 +60,8 @@ class Gooseberries extends Component {
 						<Route path="/logout" component={Logout} />
 						<Route path="/register" component={Register} />
 						<Route path="/profile/:username" component={Profile} />
+						<Route path="/create-post" component={CreatePost} />
+						<Route path="/start-thread" component={StartThread} />
 						<Route path="/" render={() => <Redirect push to="/home" />} />
 						{/* <Route to="/profile/:username" component={Profile} /> */}
 					</Switch>

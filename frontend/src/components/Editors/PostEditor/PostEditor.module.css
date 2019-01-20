@@ -1,0 +1,9 @@
+.PostEditor_container {
+	grid-column: 4/12;
+}
+
+.Editor {
+	min-height: 50rem;
+	border-width: 1px solid black;
+	background: white;
+}
