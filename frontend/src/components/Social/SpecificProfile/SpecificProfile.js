@@ -1,6 +1,6 @@
 import React from 'react'
 
-import classes from './SpecificProfile.module.css'
+// import classes from './SpecificProfile.module.css'
 
 export default props => {
 	console.log(props.user)

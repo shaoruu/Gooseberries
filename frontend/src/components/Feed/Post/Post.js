@@ -14,7 +14,7 @@ export default props => {
 			</div>
 
 			<div className={classes.Post_body}>
-				<div className={classes.shadow} />
+				{props.content.length >= 300 ? <div className={classes.shadow} /> : null}
 				<h1 className={classes.Post_title}>{props.title}</h1>
 				<div className={classes.Post_content}>{props.content}</div>
 			</div>
