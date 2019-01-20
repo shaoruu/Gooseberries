@@ -45,6 +45,10 @@ export default class Dropdown extends Component {
 							style={{ color: '#eeeeee' }}
 							size="2x"
 						/>
+						<FontAwesomeIcon
+							icon="caret-down"
+							style={{ marginLeft: '6px', color: '#eeeeee' }}
+						/>
 					</div>
 					<div className={dropdownStyles.join(' ')}>
 						<Query query={ME_QUERY}>

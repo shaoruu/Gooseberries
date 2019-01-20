@@ -12,7 +12,8 @@ import {
 	faSignOutAlt,
 	faSignInAlt,
 	faUserPlus,
-	faUserCircle
+	faUserCircle,
+	faCaretDown
 } from '@fortawesome/free-solid-svg-icons'
 
 import Layout from './hoc/Layout/Layout'
@@ -33,7 +34,8 @@ library.add(
 	faQuestionCircle,
 	faSignInAlt,
 	faSignOutAlt,
-	faUserPlus
+	faUserPlus,
+	faCaretDown
 )
 
 class Gooseberries extends Component {

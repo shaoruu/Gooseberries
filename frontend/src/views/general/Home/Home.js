@@ -4,6 +4,7 @@ import { Query } from 'react-apollo'
 import { POSTS_QUERY } from '../../../graphql/queries'
 import Feed from '../../../components/Feed/Feed'
 import classes from './Home.module.css'
+import LeftMenu from '../../../components/Navigation/LeftMenu/LeftMenu'
 
 export default class Home extends Component {
 	render() {
@@ -12,7 +13,12 @@ export default class Home extends Component {
 				<Query query={POSTS_QUERY}>
 					{({ loading, data }) => {
 						if (!data) return null
-						return !loading ? <Feed posts={data.posts.edges} /> : null
+						return !loading ? (
+							<>
+								<LeftMenu />
+								<Feed posts={data.posts.edges} />
+							</>
+						) : null
 					}}
 				</Query>
 			</div>

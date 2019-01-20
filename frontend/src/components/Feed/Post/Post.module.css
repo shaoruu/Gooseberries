@@ -3,8 +3,9 @@
 	padding: 5rem;
 	margin: auto;
 	margin-bottom: 2rem;
-	width: 35rem;
+	min-width: 20rem;
 	overflow: hidden;
+	background: white;
 }
 
 .Post_body {
@@ -20,10 +21,10 @@
 	bottom: 0;
 	width: 100%;
 	height: 3em;
-	background: -webkit-linear-gradient(transparent, #eeeeee);
-	background: -o-linear-gradient(transparent, #eeeeee);
-	background: -moz-linear-gradient(transparent, #eeeeee);
-	background: linear-gradient(transparent, #eeeeee);
+	background: -webkit-linear-gradient(transparent, white);
+	background: -o-linear-gradient(transparent, white);
+	background: -moz-linear-gradient(transparent, white);
+	background: linear-gradient(transparent, white);
 }
 
 .Post_header {
