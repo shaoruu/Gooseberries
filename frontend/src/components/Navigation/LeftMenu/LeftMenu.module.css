@@ -1,8 +1,0 @@
-.LeftMenu_container {
-	position: sticky;
-	top: 4rem;
-	margin: 2rem;
-	grid-column: 1/4;
-	/* border: 2px solid black; */
-	height: 20rem;
-}

@@ -17,6 +17,7 @@ class RouteListener extends Component {
 		this.unlisten()
 	}
 	render() {
+		// console.log(this.state.prevPath)
 		return <div>{this.props.children}</div>
 	}
 }

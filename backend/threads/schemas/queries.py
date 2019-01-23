@@ -24,6 +24,8 @@ class ThreadNode(DjangoObjectType):
     def resolve_admins(self, info):
         return [membership for membership in ThreadMember.objects.all() if membership.thread.name == self.name and membership.is_admin]
 
+    def resolve_thread_image(self, info):
+        return 'data:image/png;base64,' + self.get_thread_image_base64()
 
 
 class ThreadMemberNode(DjangoObjectType):

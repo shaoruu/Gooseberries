@@ -7,7 +7,7 @@ import { AUTH_TOKEN } from '../../../constants'
 export default withRouter(({ history }) => (
 	<ApolloConsumer>
 		{client => {
-			client.resetStore()
+			client.clearStore()
 			localStorage.setItem(AUTH_TOKEN, '')
 			history.push('/login')
 			return null

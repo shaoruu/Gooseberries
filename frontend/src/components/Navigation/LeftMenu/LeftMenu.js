@@ -65,6 +65,10 @@ class LeftMenu extends Component {
 						return null
 					}
 
+					console.log('me')
+					console.log(data)
+					console.log('endme')
+
 					const { image, username } = data.me
 
 					if (!username) return null

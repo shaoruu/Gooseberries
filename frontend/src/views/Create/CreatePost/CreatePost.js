@@ -9,6 +9,7 @@ class CreatePost extends Component {
 		// console.log(this.state.editorState)
 		return (
 			<div className={classes.CreatePost_container}>
+				<div className={classes.PostEditor_title}>Create Post</div>
 				<PostEditor />
 			</div>
 		)

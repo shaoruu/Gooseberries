@@ -4,7 +4,7 @@ import React from 'react'
 
 export default props => {
 	console.log(props.user)
-	let {
+	const {
 		firstName,
 		lastName,
 		isStaff,

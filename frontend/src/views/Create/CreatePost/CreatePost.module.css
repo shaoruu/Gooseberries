@@ -2,3 +2,10 @@
 	display: grid;
 	grid-template-columns: repeat(14, 1fr);
 }
+
+.PostEditor_title {
+	grid-column: 5/11;
+	text-align: center;
+	font-size: 2rem;
+	margin: 1rem 0;
+}

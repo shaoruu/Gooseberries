@@ -2,6 +2,8 @@ from django.db import models
 from backend.users.models import User
 from django.utils import timezone 
 from django.conf import settings
+import os
+import base64
 import uuid
 
 
@@ -10,6 +12,8 @@ class Thread(models.Model):
     description = models.TextField(max_length=500)
     is_open = models.BooleanField(default=True)
     date_created = models.DateTimeField(default=timezone.now)
+
+    thread_image = models.ImageField(default="default_thread.jpeg", upload_to="profile_pics")
 
     # members = models.ManyToManyField(User, through='ThreadMember', related_name="joined_threads")
 
@@ -28,6 +32,9 @@ class Thread(models.Model):
     def toggle_open(self):
         self.is_open = not self.is_open
 
+    def get_thread_image_base64(self):
+        return image_as_base64(self.thread_image.path)
+
 
 class ThreadMember(models.Model):
     thread   = models.ForeignKey(Thread, related_name="memberships", on_delete=models.CASCADE)
@@ -42,3 +49,13 @@ class ThreadMember(models.Model):
 
     def set_nickname(self, nickname):
         self.nickname = nickname
+
+
+def image_as_base64(image_file, format='jpeg'):
+    if not os.path.isfile(image_file):
+        return image_file
+
+    encoded_string = ''
+    with open(image_file, 'rb') as img_f:
+        encoded_string = base64.b64encode(img_f.read()).decode('utf-8')
+    return encoded_string

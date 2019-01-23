@@ -1,9 +1,15 @@
 .PostEditor_container {
-	grid-column: 4/12;
+	grid-column: 5/11;
 }
 
 .Editor {
-	min-height: 50rem;
+	min-height: 30rem;
 	border-width: 1px solid black;
 	background: white;
+}
+
+.EditorSubmission {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 2rem;
 }

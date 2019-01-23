@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const POSTS_QUERY = gql`
-	query PostQuery {
+	query PostsQuery {
 		posts {
 			edges {
 				node {
@@ -61,6 +61,14 @@ export const USER_QUERY = gql`
 	}
 `
 
+export const SIMPLE_ME_QUERY = gql`
+	query {
+		me @client {
+			username
+		}
+	}
+`
+
 export const ME_QUERY = gql`
 	query {
 		me @client {
@@ -73,6 +81,57 @@ export const ME_QUERY = gql`
 			dateJoined
 			bio
 			token
+		}
+	}
+`
+
+export const SIMPLE_THREADS_QUERY = gql`
+	query ThreadsQuery($isOpen: Boolean!) {
+		threads(isOpen: $isOpen) {
+			edges {
+				node {
+					id
+					threadImage
+					name
+					description
+				}
+			}
+		}
+	}
+`
+
+export const THREAD_QUERY = gql`
+	query ThreadQuery($name: String!) {
+		thread(name: $name) {
+			name
+			description
+			threadImage
+			memberships {
+				edges {
+					node {
+						user {
+							username
+							bio
+						}
+						isAdmin
+						nickname
+					}
+				}
+			}
+			posts {
+				edges {
+					node {
+						uniqueIdentifier
+					}
+				}
+			}
+			admins {
+				user {
+					username
+					bio
+				}
+				nickname
+			}
 		}
 	}
 `

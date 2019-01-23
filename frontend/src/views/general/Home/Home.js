@@ -5,6 +5,7 @@ import { POSTS_QUERY } from '../../../graphql/queries'
 import Feed from '../../../components/Feed/Feed'
 import classes from './Home.module.css'
 import LeftMenu from '../../../components/Navigation/LeftMenu/LeftMenu'
+import RightMenu from '../../../components/Navigation/RightMenu/RightMenu'
 
 export default class Home extends Component {
 	render() {
@@ -17,6 +18,7 @@ export default class Home extends Component {
 							<>
 								<LeftMenu />
 								<Feed posts={data.posts.edges} />
+								<RightMenu />
 							</>
 						) : null
 					}}
