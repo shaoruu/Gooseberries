@@ -101,6 +101,10 @@ class JoinThread(graphene.Mutation):
     
     def mutate(self, info, thread_name):
         thread = ThreadModel.objects.get(name=thread_name)
+
+        if ThreadMemberModel.objects.filter(user__username=info.context.user.username, thread__name=thread_name).first():
+            raise GraphQLError('Already Joined')
+
         " No joining if thread is closed "
         if not thread.is_open:
             raise GraphQLError('Thread is closed.')

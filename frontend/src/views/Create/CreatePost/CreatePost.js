@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Markdown from 'react-markdown'
+// import Markdown from 'react-markdown'
 
 import classes from './CreatePost.module.css'
 import PostEditor from '../../../components/Editors/PostEditor/PostEditor'

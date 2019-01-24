@@ -35,15 +35,12 @@ class RightMenu extends Component {
 					const { username: isLoggedIn } = client.readQuery({
 						query: SIMPLE_ME_QUERY
 					}).me
-					console.log(isLoggedIn)
 					if (!isLoggedIn) return null
 
 					const { edges: nodes } = data.threads
 
-					console.log(nodes)
-
 					const threadList = nodes.map(ele => {
-						const { id, name, description } = ele.node
+						const { id, name } = ele.node
 						return (
 							<ListItem
 								key={id}

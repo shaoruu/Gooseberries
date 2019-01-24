@@ -7,17 +7,6 @@ import SpecificThread from '../../../components/Social/SpecificThread/SpecificTh
 export default class Thread extends Component {
 	render() {
 		let name = this.props.match.params.name
-		return (
-			<Query query={THREAD_QUERY} variables={{ name }}>
-				{({ loading, error, data }) => {
-					if (loading) return <h1>LOADING</h1>
-					if (error) {
-						console.error(error)
-						return null
-					}
-					return <SpecificThread thread={data.thread} />
-				}}
-			</Query>
-		)
+		return <SpecificThread threadName={name} />
 	}
 }

@@ -81,6 +81,15 @@ export const ME_QUERY = gql`
 			dateJoined
 			bio
 			token
+			threadMemberships {
+				edges {
+					node {
+						thread {
+							name
+						}
+					}
+				}
+			}
 		}
 	}
 `

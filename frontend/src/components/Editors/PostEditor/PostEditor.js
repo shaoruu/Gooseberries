@@ -29,16 +29,16 @@ class PostEditor extends Component {
 		return 'not-handled'
 	}
 
-	handleEditorClick = event => {
+	handleEditorClick = _ => {
 		this.editor.focus()
 	}
 
 	handleTab = event => {
 		event.preventDefault()
-		const { editorState } = this.state
+		// const { editorState } = this.state
 	}
 
-	toggleIsPublic = (event, checked) => {
+	toggleIsPublic = (_, checked) => {
 		this.setState({ isPublished: checked })
 	}
 

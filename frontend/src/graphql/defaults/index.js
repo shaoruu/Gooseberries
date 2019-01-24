@@ -9,7 +9,11 @@ export default {
 		lastName: null,
 		isStaff: null,
 		dateJoined: null,
-		token: null
+		token: null,
+		threadMemberships: {
+			__typename: 'ThreadMemberNodeConnection',
+			edges: []
+		}
 	},
 	localPosts: []
 	// posts: [],

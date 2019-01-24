@@ -19,6 +19,15 @@ export const LOGIN_MUTATION = gql`
 				dateJoined
 				bio
 				token
+				threadMemberships {
+					edges {
+						node {
+							thread {
+								name
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -63,6 +72,26 @@ export const REGISTER_MUTATION = gql`
 			user {
 				username
 			}
+		}
+	}
+`
+
+export const JOIN_THREAD_MUTATION = gql`
+	mutation JoinThread($threadName: String!) {
+		joinThread(threadName: $threadName) {
+			membership {
+				thread {
+					name
+				}
+			}
+		}
+	}
+`
+
+export const LEAVE_THREAD_MUTATION = gql`
+	mutation LeaveThread($threadName: String!) {
+		leaveThread(threadName: $threadName) {
+			successful
 		}
 	}
 `

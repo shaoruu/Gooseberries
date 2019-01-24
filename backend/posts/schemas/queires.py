@@ -18,6 +18,7 @@ class PostFilter(django_filters.FilterSet):
             'content': ['icontains'],
             'unique_identifier': ['exact'],
             'published': ['exact'],
+            'thread__name': ['exact']
         }
 
 
