@@ -4,7 +4,7 @@ import { List, ListItem, ListItemText, Divider } from '@material-ui/core'
 import { Query } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 
-import { SIMPLE_THREADS_QUERY, SIMPLE_ME_QUERY } from '../../../graphql/queries'
+import { SIMPLE_THREADS_QUERY } from '../../../graphql/queries'
 
 const styles = theme => ({
 	root: {

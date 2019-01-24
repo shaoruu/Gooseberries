@@ -122,6 +122,7 @@ export const THREAD_QUERY = gql`
 						user {
 							username
 							bio
+							image
 						}
 						isAdmin
 						nickname

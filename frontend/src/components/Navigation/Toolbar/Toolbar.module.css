@@ -8,7 +8,7 @@
 	grid-template-columns: repeat(7, 1fr);
 	align-items: center;
 	background: #222831;
-	z-index: 2;
+	z-index: 3;
 	/* color: #eeeeee; */
 }
 

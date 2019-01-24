@@ -1,6 +1,6 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
-import { Redirect, NavLink } from 'react-router-dom'
+import { Redirect, NavLink, withRouter } from 'react-router-dom'
 import { Formik } from 'formik'
 import {
 	Grid,
@@ -64,7 +64,12 @@ const loginForm = props => {
 
 					if (data) {
 						props.confirmAndHandle(data)
-						return <Redirect push to="/home" />
+						try {
+							props.history.goBack()
+						} catch (e) {
+							// console.log(e)
+							return <Redirect push to="/home" />
+						}
 					}
 
 					return (
@@ -220,4 +225,4 @@ const loginForm = props => {
 	)
 }
 
-export default withStyles(styles)(loginForm)
+export default withRouter(withStyles(styles)(loginForm))

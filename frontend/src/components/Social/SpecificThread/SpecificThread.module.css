@@ -22,6 +22,7 @@
 	border-radius: 50%;
 	min-width: 125px;
 	max-width: 140px;
+	z-index: 2;
 }
 
 .ThreadContent_container {
@@ -30,21 +31,30 @@
 }
 
 .CurrentInfo_container {
+	position: sticky;
+	top: 4rem;
 	display: grid;
 	grid-template-columns: repeat(14, 1fr);
 	/* padding-bottom: 3px; */
 	border-bottom: 1px rgba(77, 77, 77, 0.267) solid;
+	background: #eeeeeeea;
+	z-index: 1;
 	/* grid-gap: 5px; */
 	/* max-height: 2rem; */
 }
 
 .SpecificThread_name {
-	margin: auto;
-	padding: 0;
+	margin: 0 auto;
+	padding: auto;
 	grid-column: 4/7;
-	display: inline;
 	font-size: 2rem;
 	font-weight: 400;
+	height: 2.8rem;
+	user-select: none;
+	cursor: pointer;
+}
+
+.selected {
 	border-bottom: 2px #7c064d solid;
 }
 
@@ -66,13 +76,16 @@
 }
 
 .SpecificThread_actives {
-	margin: auto;
+	padding: auto;
+	margin: 0 auto;
 	grid-column: 7/9;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	font-size: 2rem;
+	cursor: pointer;
+	height: 2.8rem;
+	user-select: none;
 }
 
 .CreatePostButton {
@@ -104,6 +117,11 @@
 	font-size: 1rem;
 	padding: 0 2rem;
 	text-align: justify;
+}
+
+.MemberList_container {
+	width: 100%;
+	padding: 3rem;
 }
 
 @media only screen and (max-width: 900px) {

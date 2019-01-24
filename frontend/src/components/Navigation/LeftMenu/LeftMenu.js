@@ -18,8 +18,8 @@ import {
 	AddCircle,
 	ExpandLess,
 	ExpandMore,
-	GroupAdd,
-	Create
+	GroupAdd
+	// Create
 } from '@material-ui/icons'
 import { Query } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
@@ -39,9 +39,6 @@ const styles = theme => ({
 	},
 	nested: {
 		paddingLeft: theme.spacing.unit * 4
-	},
-	avatarName: {
-		fontSize: '1rem'
 	}
 })
 
@@ -87,7 +84,6 @@ class LeftMenu extends Component {
 									</ListItemAvatar>
 									<ListItemText
 										primary={<Typography variant="h5">{username}</Typography>}
-										classes={classes.avatarName}
 									/>
 								</ListItem>
 							</List>

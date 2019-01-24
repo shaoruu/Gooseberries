@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
 import Avatar from '@material-ui/core/Avatar'
-import { withStyles, Button } from '@material-ui/core'
+import {
+	withStyles,
+	Button,
+	GridList,
+	GridListTile,
+	GridListTileBar,
+	IconButton
+} from '@material-ui/core'
+import Stars from '@material-ui/icons/Stars'
+import { withRouter } from 'react-router-dom'
 
 import classes from './SpecificThread.module.css'
 import { Mutation, Query } from 'react-apollo'
@@ -25,10 +34,26 @@ const styles = {
 		'&:active': {
 			backgroundColor: '#01ACB5'
 		}
+	},
+	gridList: {
+		width: 500,
+		height: 450
+	},
+	icon: {
+		color: 'rgba(255, 255, 255, 0.54)'
+	},
+	tile: {
+		height: '1rem'
 	}
 }
 
 class SpecificThread extends Component {
+	state = { selectedIndex: 0 }
+
+	handleClick = index => {
+		this.setState({ selectedIndex: index })
+	}
+
 	render() {
 		const styles = this.props.classes
 
@@ -67,6 +92,76 @@ class SpecificThread extends Component {
 										ele => ele.node.thread.name === name
 									)
 
+								let nameStyle = [classes.SpecificThread_name],
+									activesStyle = [classes.SpecificThread_actives],
+									mainContext = null
+
+								switch (this.state.selectedIndex) {
+									case 0:
+										mainContext = (
+											<div className={classes.ThreadContent_container}>
+												<div className={classes.BasicInfo_container}>
+													<h1>What is "{name}"</h1>
+													<div
+														className={classes.SpecificThread_description}
+													>
+														{description}
+													</div>
+												</div>
+												<Feed posts={posts} />
+											</div>
+										)
+										nameStyle.push(classes.selected)
+										break
+									case 1:
+										mainContext = (
+											<div className={classes.MemberList_container}>
+												<GridList
+													cellHeight={180}
+													className={styles.gridList}
+												>
+													{members.map(tile => (
+														<GridListTile
+															key={tile.node.user.username}
+															onClick={() =>
+																this.props.history.push(
+																	`/profile/${tile.node.user.username}`
+																)
+															}
+															style={{ cursor: 'pointer' }}
+														>
+															<img
+																src={tile.node.user.image}
+																alt={tile.node.user.username}
+															/>
+															<GridListTileBar
+																title={tile.node.user.username}
+																subtitle={
+																	tile.node.nickname ? (
+																		<span>
+																			AKA {tile.node.nickname}
+																		</span>
+																	) : null
+																}
+																actionIcon={
+																	tile.node.isAdmin ? (
+																		<IconButton className={styles.icon}>
+																			<Stars />
+																		</IconButton>
+																	) : null
+																}
+															/>
+														</GridListTile>
+													))}
+												</GridList>
+											</div>
+										)
+										activesStyle.push(classes.selected)
+										break
+									default:
+										break
+								}
+
 								return (
 									<div className={classes.SpecificThread_container}>
 										<div
@@ -83,8 +178,16 @@ class SpecificThread extends Component {
 										</div>
 
 										<div className={classes.CurrentInfo_container}>
-											<div className={classes.SpecificThread_name}>{name}</div>
-											<div className={classes.SpecificThread_actives}>
+											<div
+												className={nameStyle.join(' ')}
+												onClick={() => this.handleClick(0)}
+											>
+												{name}
+											</div>
+											<div
+												className={activesStyle.join(' ')}
+												onClick={() => this.handleClick(1)}
+											>
 												<h1>Members</h1>
 												<p>{members.length}</p>
 											</div>
@@ -221,15 +324,7 @@ class SpecificThread extends Component {
 											) : null}
 										</div>
 
-										<div className={classes.ThreadContent_container}>
-											<div className={classes.BasicInfo_container}>
-												<h1>What is "{name}"</h1>
-												<div className={classes.SpecificThread_description}>
-													{description}
-												</div>
-											</div>
-											<Feed posts={posts} />
-										</div>
+										{mainContext}
 									</div>
 								)
 							}}
@@ -241,4 +336,4 @@ class SpecificThread extends Component {
 	}
 }
 
-export default withStyles(styles)(SpecificThread)
+export default withRouter(withStyles(styles)(SpecificThread))
