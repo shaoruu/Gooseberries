@@ -5,10 +5,12 @@ import classes from './Feed.module.css'
 
 export default props => {
 	let posts = props.posts
+		.filter(({ node: { published } }) => published)
 		.slice(0)
 		.reverse()
 		.map(
 			({ node: { uniqueIdentifier, title, content, dateCreated, user, thread } }) => {
+				// TODO: CHECK IF POST IS PUBLISHED
 				return (
 					<Post
 						key={uniqueIdentifier}

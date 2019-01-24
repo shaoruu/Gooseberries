@@ -132,6 +132,18 @@ export const THREAD_QUERY = gql`
 				edges {
 					node {
 						uniqueIdentifier
+						title
+						content
+						published
+						user {
+							username
+							image
+						}
+						thread {
+							name
+							description
+						}
+						dateCreated
 					}
 				}
 			}

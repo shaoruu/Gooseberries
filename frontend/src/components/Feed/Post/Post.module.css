@@ -1,11 +1,12 @@
 .Post_container {
-	border: 2px solid black;
+	border: 1px solid black;
+	border-radius: 15px;
 	padding: 5rem;
 	margin: auto;
 	margin-bottom: 2rem;
 	min-width: 20rem;
 	overflow: hidden;
-	background: white;
+	background: rgba(243, 243, 243, 0.822);
 }
 
 .Post_body {
@@ -21,10 +22,10 @@
 	bottom: 0;
 	width: 100%;
 	height: 3em;
-	background: -webkit-linear-gradient(transparent, white);
-	background: -o-linear-gradient(transparent, white);
-	background: -moz-linear-gradient(transparent, white);
-	background: linear-gradient(transparent, white);
+	background: -webkit-linear-gradient(transparent, rgba(243, 243, 243, 0.822));
+	background: -o-linear-gradient(transparent, rgba(243, 243, 243, 0.822));
+	background: -moz-linear-gradient(transparent, rgba(243, 243, 243, 0.822));
+	background: linear-gradient(transparent, rgba(243, 243, 243, 0.822));
 }
 
 .Post_header {
