@@ -106,6 +106,7 @@ export const THREAD_QUERY = gql`
 			name
 			description
 			threadImage
+			threadBanner
 			memberships {
 				edges {
 					node {

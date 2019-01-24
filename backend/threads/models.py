@@ -13,7 +13,8 @@ class Thread(models.Model):
     is_open = models.BooleanField(default=True)
     date_created = models.DateTimeField(default=timezone.now)
 
-    thread_image = models.ImageField(default="default_thread.jpeg", upload_to="profile_pics")
+    thread_image = models.ImageField(default="default_thread.jpeg", upload_to="threads/profile")
+    thread_banner = models.ImageField(default="default_thread_banner.jpeg", upload_to="threads/banner")
 
     # members = models.ManyToManyField(User, through='ThreadMember', related_name="joined_threads")
 
@@ -34,6 +35,9 @@ class Thread(models.Model):
 
     def get_thread_image_base64(self):
         return image_as_base64(self.thread_image.path)
+
+    def get_thread_banner_base64(self):
+        return image_as_base64(self.thread_banner.path)
 
 
 class ThreadMember(models.Model):

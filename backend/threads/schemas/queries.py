@@ -27,6 +27,9 @@ class ThreadNode(DjangoObjectType):
     def resolve_thread_image(self, info):
         return 'data:image/png;base64,' + self.get_thread_image_base64()
 
+    def resolve_thread_banner(self, info):
+        return 'data:image/png;base64,' + self.get_thread_banner_base64()
+
 
 class ThreadMemberNode(DjangoObjectType):
     class Meta:
