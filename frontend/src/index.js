@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
-
 import { setContext } from 'apollo-link-context'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -44,12 +45,20 @@ const client = new ApolloClient({
 	cache: cache
 })
 
+const THEME = createMuiTheme({
+	typography: {
+		fontFamily: '"Bitter", sans-serif'
+	}
+})
+
 const app = (
-	<BrowserRouter>
-		<ApolloProvider client={client}>
-			<Gooseberries />
-		</ApolloProvider>
-	</BrowserRouter>
+	<MuiThemeProvider theme={THEME}>
+		<BrowserRouter>
+			<ApolloProvider client={client}>
+				<Gooseberries />
+			</ApolloProvider>
+		</BrowserRouter>
+	</MuiThemeProvider>
 )
 
 ReactDOM.render(app, document.getElementById('root'))

@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Collapse from '@material-ui/core/Collapse'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
 import {
 	Message,
 	Group,
@@ -38,6 +39,9 @@ const styles = theme => ({
 	},
 	nested: {
 		paddingLeft: theme.spacing.unit * 4
+	},
+	avatarName: {
+		fontSize: '1rem'
 	}
 })
 
@@ -81,7 +85,10 @@ class LeftMenu extends Component {
 									<ListItemAvatar>
 										<Avatar src={image} alt="PROFILE" />
 									</ListItemAvatar>
-									<ListItemText primary={username} />
+									<ListItemText
+										primary={<Typography variant="h5">{username}</Typography>}
+										classes={classes.avatarName}
+									/>
 								</ListItem>
 							</List>
 							<Divider />
@@ -135,16 +142,6 @@ class LeftMenu extends Component {
 								</ListItem>
 								<Collapse in={this.state.open} timeout="auto" unmountOnExit>
 									<List component="div" disablePadding>
-										<ListItem
-											button
-											className={classes.nested}
-											onClick={() => this.props.history.push('/create-post')}
-										>
-											<ListItemIcon>
-												<Create />
-											</ListItemIcon>
-											<ListItemText inset primary="Create Post" />
-										</ListItem>
 										<ListItem
 											button
 											className={classes.nested}

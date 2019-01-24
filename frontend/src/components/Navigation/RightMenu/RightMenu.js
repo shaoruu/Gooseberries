@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { List, ListItem, ListItemText } from '@material-ui/core'
+import { List, ListItem, ListItemText, Divider } from '@material-ui/core'
 import { Query } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 
@@ -14,6 +14,15 @@ const styles = theme => ({
 		padding: '2rem',
 		top: '2rem',
 		maxHeight: '20rem'
+	},
+	title: {
+		fontSize: '2rem',
+		margin: 0,
+		marginBottom: 10,
+		textAlign: 'center'
+	},
+	listItem: {
+		textAlign: 'right'
 	}
 })
 
@@ -32,10 +41,10 @@ class RightMenu extends Component {
 						return null
 					}
 
-					const { username: isLoggedIn } = client.readQuery({
-						query: SIMPLE_ME_QUERY
-					}).me
-					if (!isLoggedIn) return null
+					// const { username: isLoggedIn } = client.readQuery({
+					//	query: SIMPLE_ME_QUERY
+					// }).me
+					// if (!isLoggedIn) return null
 
 					const { edges: nodes } = data.threads
 
@@ -45,6 +54,7 @@ class RightMenu extends Component {
 							<ListItem
 								key={id}
 								button
+								className={classes.listItem}
 								onClick={() => {
 									this.props.history.push(`/thread/${name}`)
 								}}
@@ -56,6 +66,9 @@ class RightMenu extends Component {
 
 					return (
 						<div className={classes.root}>
+							<h1 className={classes.title}>DISCOVER</h1>
+							{/* <small>discover new things!</small> */}
+							<Divider />
 							<List component="div">{threadList}</List>
 						</div>
 					)
