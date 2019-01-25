@@ -83,6 +83,12 @@ export const JOIN_THREAD_MUTATION = gql`
 				thread {
 					name
 				}
+				user {
+					image
+					username
+				}
+				nickname
+				isAdmin
 			}
 		}
 	}

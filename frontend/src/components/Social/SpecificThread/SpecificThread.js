@@ -267,7 +267,7 @@ class SpecificThread extends Component {
 															const { me: tempMe } = cache.readQuery({
 																query: ME_QUERY
 															})
-															const newMembership = {
+															tempMe.threadMemberships.edges.push({
 																__typename: 'ThreadMemberNodeEdge',
 																node: {
 																	thread: {
@@ -276,11 +276,9 @@ class SpecificThread extends Component {
 																	},
 																	__typename: 'ThreadMemberNode'
 																}
-															}
-															tempMe.threadMemberships.edges.push(
-																newMembership
-															)
-															members.push(newMembership)
+															})
+															console.log(membership)
+															members.push({ node: membership })
 															cache.writeQuery({
 																query: ME_QUERY,
 																data: {

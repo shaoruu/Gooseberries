@@ -24,8 +24,8 @@ import Login from './views/authentication/Login/Login'
 import Logout from './views/authentication/Logout/Logout'
 import Register from './views/authentication/Register/Register'
 import Profile from './views/specifics/Profile/Profile.js'
-import CreatePost from './views/Create/CreatePost/CreatePost'
-import StartThread from './views/Create/StartThread/StartThread'
+import CreatePost from './views/create/CreatePost/CreatePost'
+import StartThread from './views/create/StartThread/StartThread'
 import Thread from './views/specifics/Thread/Thread'
 
 library.add(

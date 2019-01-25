@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
+import { PrevPathProvider } from '../../contexts/RouterContext'
+
 class RouteListener extends Component {
 	state = {
 		prevPath: null
@@ -18,7 +20,11 @@ class RouteListener extends Component {
 	}
 	render() {
 		// console.log(this.state.prevPath)
-		return <div>{this.props.children}</div>
+		return (
+			<PrevPathProvider value={this.state.prevPath}>
+				{this.props.children}
+			</PrevPathProvider>
+		)
 	}
 }
 
