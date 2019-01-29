@@ -1,0 +1,12 @@
+.StartThreadForm_container {
+	grid-column: 2/14;
+	width: 50rem;
+	padding: 3rem;
+	color: #222831;
+	/* width: 25rem; */
+	justify-self: center;
+	box-shadow: 8px 8px 6px -6px #d3d4d8;
+	background: #f5f5f5;
+	margin-top: 5rem;
+	border-radius: 3px;
+}

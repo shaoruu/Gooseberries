@@ -5,6 +5,7 @@ from django.conf import settings
 import os
 import base64
 import uuid
+from PIL import Image
 
 
 class Thread(models.Model):
@@ -27,8 +28,14 @@ class Thread(models.Model):
     Overriding the save function for future usages.
     '''
     def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
-        return super(Thread, self).save(*args, **kwargs)
+        super().save()
+        
+        img = Image.open(self.thread_image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.thread_image.path)
 
     def toggle_open(self):
         self.is_open = not self.is_open

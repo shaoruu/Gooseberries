@@ -6,10 +6,10 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
-import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { BrowserRouter } from 'react-router-dom'
 import { withClientState } from 'apollo-link-state'
+import { createUploadLink } from 'apollo-upload-client'
 
 import './index.css'
 import Gooseberries from './Gooseberries'
@@ -26,7 +26,7 @@ const stateLink = withClientState({
 	defaults
 })
 
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
 	uri: 'http://localhost:8000/graphql'
 })
 

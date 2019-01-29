@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import { POSTS_QUERY } from '../../../graphql/queries'
+import { POSTS_QUERY, SIMPLE_THREADS_QUERY } from '../../../graphql/queries'
 import Feed from '../../../components/Feed/Feed'
 import classes from './Home.module.css'
 import LeftMenu from '../../../components/Navigation/LeftMenu/LeftMenu'
@@ -18,7 +18,14 @@ export default class Home extends Component {
 							<>
 								<LeftMenu />
 								<Feed posts={data.posts.edges} />
-								<RightMenu />
+								<Query query={SIMPLE_THREADS_QUERY} variables={{ isOpen: true }}>
+									{({ loading, data }) => {
+										if (!data) return null
+										return !loading ? (
+											<RightMenu threads={data.threads} />
+										) : null
+									}}
+								</Query>
 							</>
 						) : null
 					}}

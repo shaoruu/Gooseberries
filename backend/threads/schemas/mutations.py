@@ -1,6 +1,9 @@
 import graphene
+from PIL import Image
+import urllib
 from django.db import IntegrityError
 from graphql import GraphQLError
+from graphene_file_upload.scalars import Upload
 from backend.utils import clean_input 
 from backend.threads.models import Thread as ThreadModel, ThreadMember as ThreadMemberModel
 from backend.threads.schemas.queries import ThreadNode, ThreadMemberNode
@@ -14,8 +17,9 @@ class CreateThread(graphene.relay.ClientIDMutation):
     arguments and store it into database.
     """
     class Input: 
-        name        = graphene.String(required=True, description="Thread name")
-        description = graphene.String(required=True, description="Thread description")
+        name         = graphene.String(required=True, description="Thread name")
+        description  = graphene.String(required=True, description="Thread description")
+        thread_image = Upload(required=True, description="Thread image")
 
     ' Fields '
     thread = graphene.Field(ThreadNode)
@@ -37,7 +41,7 @@ class CreateThread(graphene.relay.ClientIDMutation):
         # Creating thread
         new_thread = ThreadModel(**cleaned_input)
         new_thread.save()
-
+        
         # Adding creator to the thread
         new_membership = ThreadMemberModel(user=called_user, thread=new_thread)
         new_membership.save()

@@ -33,7 +33,11 @@ class RightMenu extends Component {
 		const { classes } = this.props
 
 		return (
-			<Query query={SIMPLE_THREADS_QUERY} variables={{ isOpen: true }}>
+			<Query
+				query={SIMPLE_THREADS_QUERY}
+				variables={{ isOpen: true }}
+				fetchPolicy="no-cache"
+			>
 				{({ client, loading, error, data }) => {
 					if (loading) return null
 					if (error) {

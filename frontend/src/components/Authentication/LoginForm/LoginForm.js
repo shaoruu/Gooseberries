@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import { Redirect, NavLink, withRouter } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { Formik } from 'formik'
 import {
 	Grid,
@@ -68,11 +68,12 @@ class LoginForm extends Component {
 
 						if (data) {
 							props.confirmAndHandle(data)
-							console.log(this.context)
+							props.history.push('/home')
+							/* console.log(this.context)
 							if (!this.context) props.history.push('/home')
 							else if (this.context === '/logout' || this.context === '/login')
 								props.history.go(-2)
-							else props.history.goBack()
+							else props.history.goBack() */
 						}
 
 						return (
