@@ -79,7 +79,7 @@ export const REGISTER_MUTATION = gql`
 export const CREATE_THREAD_SCHEMA = Yup.object().shape({
 	name: Yup.string()
 		.min(3, 'The name of the thread must be longer than 3 characters.')
-		.max(30, 'The name of the thread can not be over 30 characters.')
+		.max(15, 'The name of the thread can not be over 30 characters.')
 		.required('Thread name is required.'),
 	description: Yup.string()
 		.min(30, 'Description must be at least 30 characters.')
@@ -88,7 +88,7 @@ export const CREATE_THREAD_SCHEMA = Yup.object().shape({
 })
 
 export const CREATE_THREAD_MUTATION = gql`
-	mutation CreateThread($name: String!, $description: String!, $threadImage: Upload!) {
+	mutation CreateThread($name: String!, $description: String!, $threadImage: Upload) {
 		createThread(
 			input: { name: $name, description: $description, threadImage: $threadImage }
 		) {

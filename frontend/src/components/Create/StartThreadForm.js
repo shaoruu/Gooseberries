@@ -128,12 +128,14 @@ class StartThreadForm extends Component {
 								initialValues={{ name: '', description: '' }}
 								validationSchema={CREATE_THREAD_SCHEMA}
 								onSubmit={(values, { setSubmitting }) => {
+									let variables = {
+										name: values.name.toLowerCase(),
+										description: values.description
+									}
+									if (this.state.imageFull)
+										variables.threadImage = this.state.imageFull
 									createThread({
-										variables: {
-											name: values.name.toLowerCase(),
-											description: values.description,
-											threadImage: this.state.imageFull
-										}
+										variables
 									})
 									setSubmitting(false)
 								}}

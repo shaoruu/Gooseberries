@@ -19,7 +19,7 @@ class CreateThread(graphene.relay.ClientIDMutation):
     class Input: 
         name         = graphene.String(required=True, description="Thread name")
         description  = graphene.String(required=True, description="Thread description")
-        thread_image = Upload(required=True, description="Thread image")
+        thread_image = Upload(description="Thread image")
 
     ' Fields '
     thread = graphene.Field(ThreadNode)
@@ -43,7 +43,7 @@ class CreateThread(graphene.relay.ClientIDMutation):
         new_thread.save()
         
         # Adding creator to the thread
-        new_membership = ThreadMemberModel(user=called_user, thread=new_thread)
+        new_membership = ThreadMemberModel(user=called_user, thread=new_thread, is_admin=True)
         new_membership.save()
 
         return CreateThread(thread=new_thread)
