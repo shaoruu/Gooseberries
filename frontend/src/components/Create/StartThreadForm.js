@@ -127,7 +127,7 @@ class StartThreadForm extends Component {
 							<Formik
 								initialValues={{ name: '', description: '' }}
 								validationSchema={CREATE_THREAD_SCHEMA}
-								onSubmit={(values, { setSubmitting }) => {
+								onSubmit={(values, { setSubmitting, setValues }) => {
 									let variables = {
 										name: values.name.toLowerCase(),
 										description: values.description
@@ -165,12 +165,12 @@ class StartThreadForm extends Component {
 																	className={styles.formImageWrapper}
 																	onMouseEnter={() => {
 																		this.setState({
-																			isImageChange: true
+																			isImageHover: true
 																		})
 																	}}
 																	onMouseLeave={() => {
 																		this.setState({
-																			isImageChange: false
+																			isImageHover: false
 																		})
 																	}}
 																>
@@ -238,7 +238,7 @@ class StartThreadForm extends Component {
 																			error
 																		>
 																			Thread name should not contain
-																			spaces.
+																			any spaces.
 																		</FormHelperText>
 																	))))}
 													</FormControl>

@@ -79,8 +79,9 @@ export const REGISTER_MUTATION = gql`
 export const CREATE_THREAD_SCHEMA = Yup.object().shape({
 	name: Yup.string()
 		.min(3, 'The name of the thread must be longer than 3 characters.')
-		.max(15, 'The name of the thread can not be over 30 characters.')
-		.required('Thread name is required.'),
+		.max(20, 'The name of the thread can not be over 20 characters.')
+		.required('Thread name is required.')
+		.matches(/^\S{3,}$/, 'Thread name cannot have any spaces'),
 	description: Yup.string()
 		.min(30, 'Description must be at least 30 characters.')
 		.max(500, 'The length of the description cannot exceed 500.')

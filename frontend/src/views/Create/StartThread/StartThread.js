@@ -6,6 +6,9 @@ import classes from './StartThread.module.css'
 import { AUTH_TOKEN } from '../../../constants'
 
 class StartThread extends Component {
+	componentDidMount() {
+		document.title = 'Start Thread'
+	}
 	render() {
 		return (
 			<>

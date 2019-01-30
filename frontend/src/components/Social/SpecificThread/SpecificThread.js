@@ -8,8 +8,9 @@ import {
 	GridListTileBar,
 	IconButton
 } from '@material-ui/core'
-import Stars from '@material-ui/icons/Stars'
+import { Edit, Stars } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
+import Dropzone from 'react-dropzone'
 
 import classes from './SpecificThread.module.css'
 import { Mutation, Query } from 'react-apollo'
@@ -41,7 +42,7 @@ const styles = {
 		height: 450
 	},
 	icon: {
-		color: 'rgba(255, 255, 255, 0.54)'
+		color: '#eeeeee'
 	},
 	tile: {
 		height: '1rem'
@@ -49,10 +50,26 @@ const styles = {
 }
 
 class SpecificThread extends Component {
-	state = { selectedIndex: 0 }
+	state = { selectedIndex: 0, bannerHovered: false, avatarHover: false }
 
 	handleClick = index => {
 		this.setState({ selectedIndex: index })
+	}
+
+	handleBannerHover = () => {
+		this.setState({ bannerHovered: true })
+	}
+
+	handleBannerLeave = () => {
+		this.setState({ bannerHovered: false })
+	}
+
+	handleAvatarHover = () => {
+		this.setState({ avatarHover: true })
+	}
+
+	handleAvatarLeave = () => {
+		this.setState({ avatarHover: false })
 	}
 
 	render() {
@@ -73,8 +90,8 @@ class SpecificThread extends Component {
 						threadImage,
 						threadBanner,
 						memberships: { edges: members },
-						posts: { edges: posts }
-						// admins
+						posts: { edges: posts },
+						admins
 					} = data.thread
 
 					return (
@@ -92,6 +109,10 @@ class SpecificThread extends Component {
 									me.threadMemberships.edges.some(
 										ele => ele.node.thread.name === name
 									)
+
+								const isAdmin = admins.some(
+									ele => ele.user.username === me.username
+								)
 
 								let nameStyle = [classes.SpecificThread_name],
 									activesStyle = [classes.SpecificThread_actives],
@@ -167,14 +188,73 @@ class SpecificThread extends Component {
 									<div className={classes.SpecificThread_container}>
 										<div
 											className={classes.ThreadBanner}
-											style={{ backgroundImage: `url(${threadBanner})` }}
+											style={{
+												backgroundImage: `url(${threadBanner})`,
+												cursor: isAdmin ? 'pointer' : 'auto'
+											}}
 										>
-											<div className={classes.Avatar_container}>
+											<div
+												className={classes.Avatar_container}
+												onMouseEnter={this.handleAvatarHover}
+												onMouseLeave={this.handleAvatarLeave}
+											>
 												<Avatar
 													src={threadImage}
 													alt="Thread Profile"
 													className={styles.bigAvatar}
 												/>
+												<div
+													className={classes.AvatarChangeText}
+													style={
+														this.state.avatarHover && isAdmin
+															? null
+															: { display: 'none' }
+													}
+												>
+													Edit
+												</div>
+											</div>
+											<div
+												onMouseEnter={this.handleBannerHover}
+												onMouseLeave={this.handleBannerLeave}
+												style={{
+													gridColumn: '1/-1',
+													width: '100%',
+													height: '100%',
+													position: 'relative'
+												}}
+											>
+												{this.state.bannerHovered && isAdmin ? (
+													<>
+														<Dropzone
+															onDrop={this.handleBannerDrop}
+															multiple={false}
+															accept="image/jpeg, image/png, image/jpg"
+														>
+															{({ getRootProps, getInputProps }) => {
+																return (
+																	<div
+																		{...getRootProps()}
+																		style={{
+																			width: '100%',
+																			height: '100%'
+																		}}
+																	>
+																		<input {...getInputProps()} />
+																	</div>
+																)
+															}}
+														</Dropzone>
+														<div className={classes.EditThread_container}>
+															<div className={classes.EditThreadTitle}>
+																Click to edit thread
+															</div>
+															<div>
+																<Edit />
+															</div>
+														</div>
+													</>
+												) : null}
 											</div>
 										</div>
 

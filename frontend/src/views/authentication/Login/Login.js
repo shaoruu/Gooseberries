@@ -7,6 +7,10 @@ import { AUTH_TOKEN } from '../../../constants'
 
 export default withRouter(
 	class Login extends Component {
+		componentDidMount() {
+			document.title = 'Login'
+		}
+
 		confirmAndHandleData = data => {
 			// console.log(data)
 			const { token } = data.login.user

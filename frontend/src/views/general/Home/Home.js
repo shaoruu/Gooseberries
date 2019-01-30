@@ -8,6 +8,10 @@ import LeftMenu from '../../../components/Navigation/LeftMenu/LeftMenu'
 import RightMenu from '../../../components/Navigation/RightMenu/RightMenu'
 
 export default class Home extends Component {
+	componentDidMount() {
+		document.title = 'Home'
+	}
+
 	render() {
 		return (
 			<div className={classes.Home_container}>

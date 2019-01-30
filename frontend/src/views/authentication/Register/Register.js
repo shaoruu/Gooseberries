@@ -6,6 +6,10 @@ import RegisterForm from '../../../components/Authentication/RegisterForm/Regist
 import { AUTH_TOKEN } from '../../../constants'
 
 export default class Login extends Component {
+	componentDidMount() {
+		document.title = 'Register'
+	}
+
 	render() {
 		return (
 			<div className={classes.Register_container}>
