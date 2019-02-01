@@ -81,7 +81,11 @@ export const CREATE_THREAD_SCHEMA = Yup.object().shape({
 		.min(3, 'The name of the thread must be longer than 3 characters.')
 		.max(20, 'The name of the thread can not be over 20 characters.')
 		.required('Thread name is required.')
-		.matches(/^\S{3,}$/, 'Thread name cannot have any spaces'),
+		.matches(/^\S{3,}$/, 'Thread name cannot have any spaces.')
+		.matches(
+			/^[a-zA-Z0-9_.-]*$/,
+			'Thread name can only contain alphabets, numbers, dashes and underscores.'
+		),
 	description: Yup.string()
 		.min(30, 'Description must be at least 30 characters.')
 		.max(500, 'The length of the description cannot exceed 500.')

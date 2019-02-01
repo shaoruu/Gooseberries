@@ -1,0 +1,25 @@
+.headlineButtonWrapper {
+	display: inline-block;
+}
+
+.headlineButton {
+	background: none;
+	color: #888;
+	font-size: 18px;
+	font-weight: bold;
+	border: 0;
+	padding-top: 5px;
+	vertical-align: bottom;
+	height: 34px;
+	width: 36px;
+}
+
+.headlineButton:hover,
+.headlineButton:focus {
+	background: #444;
+}
+
+.Header {
+	width: 18px;
+	height: 17px;
+}

@@ -63,7 +63,7 @@ export const USER_QUERY = gql`
 
 export const SIMPLE_ME_QUERY = gql`
 	query {
-		me @client {
+		me {
 			username
 		}
 	}
@@ -71,7 +71,7 @@ export const SIMPLE_ME_QUERY = gql`
 
 export const ME_QUERY = gql`
 	query {
-		me @client {
+		me {
 			username
 			email
 			image

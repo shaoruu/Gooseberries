@@ -5,6 +5,9 @@ import { USER_QUERY } from '../../../graphql/queries'
 import SpecificProfile from '../../../components/Social/SpecificProfile/SpecificProfile'
 
 export default class Profile extends Component {
+	componentDidMount() {
+		document.title = `Profile: ${this.props.match.params.username}`
+	}
 	render() {
 		console.log(this.props.match.params)
 		let username = this.props.match.params.username

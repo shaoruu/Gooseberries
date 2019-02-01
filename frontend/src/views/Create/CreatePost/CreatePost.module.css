@@ -3,9 +3,28 @@
 	grid-template-columns: repeat(14, 1fr);
 }
 
-.PostEditor_title {
+.Editor_title {
 	grid-column: 5/11;
 	text-align: center;
 	font-size: 2rem;
-	margin: 1rem 0;
+	margin: 0 auto;
+	margin-top: 2rem;
+	font-weight: 600;
+}
+
+.EditorWrapper {
+	grid-column: 3/13;
+	overflow: scroll;
+	min-width: 60rem;
+	margin: auto;
+	/* max-height: 30rem; */
+}
+
+.EditorSubmission {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	bottom: 2rem;
+	right: 2rem;
 }

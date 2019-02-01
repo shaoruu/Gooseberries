@@ -8,9 +8,8 @@ import {
 	GridListTileBar,
 	IconButton
 } from '@material-ui/core'
-import { Edit, Stars } from '@material-ui/icons'
+import { Stars } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
-import Dropzone from 'react-dropzone'
 
 import classes from './SpecificThread.module.css'
 import { Mutation, Query } from 'react-apollo'
@@ -52,6 +51,8 @@ const styles = {
 class SpecificThread extends Component {
 	state = { selectedIndex: 0, bannerHovered: false, avatarHover: false }
 
+	// TODO: HANDLE THREAD CHANGES
+
 	handleClick = index => {
 		this.setState({ selectedIndex: index })
 	}
@@ -70,6 +71,13 @@ class SpecificThread extends Component {
 
 	handleAvatarLeave = () => {
 		this.setState({ avatarHover: false })
+	}
+
+	handleCreatePost = threadName => {
+		this.props.history.push({
+			pathname: '/create-post',
+			state: { threadName }
+		})
 	}
 
 	render() {
@@ -95,24 +103,29 @@ class SpecificThread extends Component {
 					} = data.thread
 
 					return (
-						<Query query={ME_QUERY}>
+						<Query query={ME_QUERY} fetchPolicy="network-only">
 							{({ loading, error, data }) => {
 								if (loading) return null
+
+								let me = {},
+									isJoined = false,
+									isAdmin = false
+
 								if (error) {
-									console.error(error)
-									return null
+									if (!error.message.includes('Not Logged in!')) return null
+								} else {
+									console.log('lol')
+									me = data.me
+									console.log(me)
+
+									isJoined =
+										me.threadMemberships &&
+										me.threadMemberships.edges.some(
+											ele => ele.node.thread.name === name
+										)
+
+									isAdmin = admins.some(ele => ele.user.username === me.username)
 								}
-								const me = data.me
-
-								const isJoined =
-									me.threadMemberships &&
-									me.threadMemberships.edges.some(
-										ele => ele.node.thread.name === name
-									)
-
-								const isAdmin = admins.some(
-									ele => ele.user.username === me.username
-								)
 
 								let nameStyle = [classes.SpecificThread_name],
 									activesStyle = [classes.SpecificThread_actives],
@@ -195,15 +208,15 @@ class SpecificThread extends Component {
 										>
 											<div
 												className={classes.Avatar_container}
-												onMouseEnter={this.handleAvatarHover}
-												onMouseLeave={this.handleAvatarLeave}
+												// onMouseEnter={this.handleAvatarHover}
+												// onMouseLeave={this.handleAvatarLeave}
 											>
 												<Avatar
 													src={threadImage}
 													alt="Thread Profile"
 													className={styles.bigAvatar}
 												/>
-												<div
+												{/* <div
 													className={classes.AvatarChangeText}
 													style={
 														this.state.avatarHover && isAdmin
@@ -212,9 +225,9 @@ class SpecificThread extends Component {
 													}
 												>
 													Edit
-												</div>
+												</div> */}
 											</div>
-											<div
+											{/* <div
 												onMouseEnter={this.handleBannerHover}
 												onMouseLeave={this.handleBannerLeave}
 												style={{
@@ -253,9 +266,12 @@ class SpecificThread extends Component {
 																<Edit />
 															</div>
 														</div>
+														{this.state.isBannerDropped ? (
+															<div>DROPPED</div>
+														) : null}
 													</>
 												) : null}
-											</div>
+											</div> */}
 										</div>
 
 										<div className={classes.CurrentInfo_container}>
@@ -274,7 +290,12 @@ class SpecificThread extends Component {
 											</div>
 											{me.username && isJoined ? (
 												<div className={classes.CreatePostButton}>
-													<Button variant="outlined">Create Post</Button>
+													<Button
+														variant="outlined"
+														onClick={() => this.handleCreatePost(name)}
+													>
+														Create Post
+													</Button>
 												</div>
 											) : null}
 											{me.username ? (

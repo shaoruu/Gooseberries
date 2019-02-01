@@ -15,7 +15,7 @@ export default class Home extends Component {
 	render() {
 		return (
 			<div className={classes.Home_container}>
-				<Query query={POSTS_QUERY}>
+				<Query query={POSTS_QUERY} fetchPolicy="network-only">
 					{({ loading, data }) => {
 						if (!data) return null
 						return !loading ? (

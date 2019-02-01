@@ -1,0 +1,23 @@
+.imageButtonWrapper {
+	display: inline-block;
+}
+
+.imageButton {
+	background: none;
+	font-size: 18px;
+	border: 0;
+	padding-top: 5px;
+	vertical-align: bottom;
+	height: 34px;
+	width: 36px;
+}
+
+.imageButton:hover,
+.imageButton:focus {
+	background: #444;
+}
+
+.ImageAdd {
+	width: 18px;
+	height: 18px;
+}

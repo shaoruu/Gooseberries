@@ -58,13 +58,18 @@ class LeftMenu extends Component {
 	render() {
 		const { classes } = this.props
 		return (
-			<Query query={ME_QUERY}>
-				{({ loading, error, data }) => {
+			<Query query={ME_QUERY} fetchPolicy="network-only">
+				{({ client, loading, error, data }) => {
 					if (loading) return null
 					if (error) {
 						console.error(error)
 						return null
 					}
+
+					client.cache.writeQuery({
+						query: ME_QUERY,
+						data: data
+					})
 
 					const { image, username } = data.me
 
