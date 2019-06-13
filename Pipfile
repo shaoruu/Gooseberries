@@ -4,13 +4,14 @@ url = "https://pypi.org/simple"
 name = "pypi"
 
 [packages]
-smtplib = "==21.17.1"
 graphene-django = "==2.2.0"
 django-filter = "==2.0.0"
 django-graphql-jwt = "==0.1.5"
 django-pipeline = "==1.6.14"
 django-cors-headers = "==2.4.0"
 Django = "==2.1.5"
+pillow = "*"
+graphene-file-upload = "*"
 
 [requires]
 python_version = "3.6"
